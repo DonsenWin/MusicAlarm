@@ -27,36 +27,38 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		
+
 		prepareBlueTooth();
-		
-		
+
 	}
 
 	private void prepareBlueTooth() {
 		BluetoothAdapter bt = BluetoothAdapter.getDefaultAdapter();
-		if(!bt.equals(null)){
+		if (!bt.equals(null)) {
 			showMessage("bluetoothをサポートしています");
-		}else{
+		} else {
 			showMessage("bluetoothをサポートしていません。");
 			return;
 		}
-		
-		if(bt.isEnabled()){			
+
+		if (bt.isEnabled()) {
 			showMessage("bluetoothは有効です。");
-		}else{
+		} else {
 			showMessage("bluetoothは無効です。");
 		}
-		
+
 		Set<BluetoothDevice> pairedDevices = bt.getBondedDevices();
-		for(BluetoothDevice device: pairedDevices){
-			showMessage("name : " + device.getName() + " address : " + device.getAddress() +" status : " + device.getBondState());
+		for (BluetoothDevice device : pairedDevices) {
+			showMessage("name : " + device.getName() + " address : "
+					+ device.getAddress() + " status : "
+					+ device.getBondState());
 		}
 	}
 
-
 	private void showMessage(String string) {
-		((TextView)findViewById(R.id.message)).setText(((TextView)findViewById(R.id.message)).getText().toString() + "\n" +  string);	
+		((TextView) findViewById(R.id.message))
+				.setText(((TextView) findViewById(R.id.message)).getText()
+						.toString() + "\n" + string);
 	}
 
 	@Override
@@ -68,7 +70,7 @@ public class MainActivity extends Activity {
 
 	public void onClickStartMusic(View view) {
 		Log.v(TAG, "called onClickStartMusic");
-		manager = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
+		manager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
 		manager.setBluetoothScoOn(true);
 		manager.setMode(AudioManager.MODE_IN_CALL);
 
@@ -79,38 +81,39 @@ public class MainActivity extends Activity {
 			player.setAudioStreamType(AudioManager.STREAM_VOICE_CALL);
 			player.prepare();
 		} catch (IllegalArgumentException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (SecurityException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IllegalStateException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
-		
-		player.start();
-
+		if (player != null) {
+			player.start();
+		}
 	}
-	
+
 	@Override
-	public void onDestroy(){
+	public void onDestroy() {
 		super.onDestroy();
 		onClickEndMusic(null);
 	}
-	
-	public void onClickUpdateBlueToothStatus(View view){
+
+	public void onClickUpdateBlueToothStatus(View view) {
 		prepareBlueTooth();
 	}
 
 	public void onClickEndMusic(View view) {
-		player.stop();
-		manager.setMode(AudioManager.MODE_NORMAL);
-		manager.setBluetoothScoOn(false);
+		if (player != null) {
+			player.stop();
+		}
+
+		if (manager != null) {
+			manager.setMode(AudioManager.MODE_NORMAL);
+			manager.setBluetoothScoOn(false);
+		}
 	}
 
 }
