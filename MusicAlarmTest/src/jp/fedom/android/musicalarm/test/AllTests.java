@@ -12,7 +12,7 @@ public final class AllTests extends InstrumentationTestRunner {
 	 * @see android.test.InstrumentationTestRunner#getAllTests()
 	 */
 	@Override
-	public final TestSuite getAllTests(){
+	public TestSuite getAllTests(){
 		super.getAllTests();
 		return new TestSuiteBuilder(AllTests.class)
 		           .includeAllPackagesUnderHere()
@@ -24,7 +24,7 @@ public final class AllTests extends InstrumentationTestRunner {
 	 * @see android.test.InstrumentationTestRunner#getAllTests()
 	 */
 	@Override
-	public final ClassLoader getLoader(){
+	public ClassLoader getLoader(){
 		return super.getLoader();
 	}
 

@@ -16,7 +16,7 @@ public final class SampleTest extends TestCase {
 	 * TODO:describe comment 
 	 */
 
-	protected final void setUp() throws Exception {
+	protected void setUp() throws Exception {
 		super.setUp();
 	}
 
@@ -25,7 +25,7 @@ public final class SampleTest extends TestCase {
 	 * TODO:describe comment 
 	 */
 
-	protected final void tearDown() throws Exception {
+	protected void tearDown() throws Exception {
 		super.tearDown();
 	}
 

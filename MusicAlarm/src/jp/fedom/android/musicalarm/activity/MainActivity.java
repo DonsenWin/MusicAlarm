@@ -23,8 +23,16 @@ import android.widget.TextView;
  */
 public final class MainActivity extends Activity {
 
-	public static final String TAG = "MainActivity";
+    /* for logging*/
+    public static final String TAG = "MainActivity";
+
+    /* for test*/
+    private final String MUSIC_FILE_PATH = "/mnt/sdcard/media/audio/01 情熱大陸2007.mp3";
+    
+    /* Music Player TODO:create class */ 
 	private MediaPlayer player;
+
+    /* Audio Player TODO:create class */ 
 	private AudioManager manager;
 
 	@Override
@@ -32,8 +40,8 @@ public final class MainActivity extends Activity {
 	 * 
 	 * TODO:describe comment 
 	 */
-	public final void onCreate(final Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+	public void onCreate(final Bundle savedState /*=savedInstanceState*/) {
+		super.onCreate(savedState);
 		setContentView(R.layout.activity_main);
 
 		prepareBlueTooth();
@@ -43,18 +51,16 @@ public final class MainActivity extends Activity {
 	 * 
 	 * TODO:describe comment
 	 */
-	private final void prepareBlueTooth() {
-		final BluetoothAdapter bt = BluetoothAdapter.getDefaultAdapter();
-		if (bt == null) {
+	private void prepareBlueTooth() {
+		final BluetoothAdapter bluetooth = BluetoothAdapter.getDefaultAdapter();
+		if (bluetooth == null) {
 			showMessage("bluetoothをサポートしていません。");
-			return;
 		} else {
 			showMessage("bluetoothをサポートしています");
-
-			if (bt.isEnabled()) {
+			if (bluetooth.isEnabled()) {
 				showMessage("bluetoothは有効です。");
-				final Set<BluetoothDevice> pairedDevices = bt.getBondedDevices();
-				for (final BluetoothDevice device : pairedDevices) {
+				final Set<BluetoothDevice> pairedDevices = bluetooth.getBondedDevices();
+				for (BluetoothDevice device : pairedDevices) {
 					showMessage("name : " + device.getName() + " address : "
 							+ device.getAddress() + " status : "
 							+ device.getBondState());
@@ -70,7 +76,7 @@ public final class MainActivity extends Activity {
 	 * 
 	 * TODO:describe comment
 	 */
-	private final void showMessage(final String string) {
+	private void showMessage(final String string) {
 		((TextView) findViewById(R.id.message))
 				.setText(((TextView) findViewById(R.id.message)).getText()
 						.toString() + "\n" + string);
@@ -81,7 +87,7 @@ public final class MainActivity extends Activity {
 	 * 
 	 * TODO:describe comment 
 	 */
-	public final boolean onCreateOptionsMenu(final Menu menu) {
+	public boolean onCreateOptionsMenu(final Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.activity_main, menu);
 		return true;
@@ -91,7 +97,7 @@ public final class MainActivity extends Activity {
 	 * 
 	 * TODO:describe comment
 	 */
-	public final void onClickStartMusic(final View view) {
+	public void onClickStartMusic(final View view) {
 		Log.v(TAG, "called onClickStartMusic");
 		if (manager != null || player != null) {
 			onClickEndMusic(null);
@@ -102,9 +108,8 @@ public final class MainActivity extends Activity {
 		manager.setMode(AudioManager.MODE_IN_CALL);
 
 		player = new MediaPlayer();
-		final String path = "/mnt/sdcard/media/audio/01 情熱大陸2007.mp3";
 		try {
-			player.setDataSource(path);
+			player.setDataSource(MUSIC_FILE_PATH);
 			player.setAudioStreamType(AudioManager.STREAM_VOICE_CALL);
 			player.prepare();
 		} catch (IllegalArgumentException e) {
@@ -117,9 +122,7 @@ public final class MainActivity extends Activity {
 			e.printStackTrace();
 		}
 
-		if (player != null) {
-			player.start();
-		}
+		player.start();
 	}
 
 	@Override
@@ -127,7 +130,7 @@ public final class MainActivity extends Activity {
 	 * 
 	 * TODO:describe comment 
 	 */
-	public final void onDestroy() {
+	public void onDestroy() {
 		onClickEndMusic(null);
 
 		super.onDestroy();
@@ -137,7 +140,7 @@ public final class MainActivity extends Activity {
 	 * 
 	 * TODO:describe comment
 	 */
-	public final void onClickUpdateBlueToothStatus(final View view) {
+	public void onClickUpdateBlueToothStatus(final View view) {
 		prepareBlueTooth();
 	}
 
@@ -145,7 +148,7 @@ public final class MainActivity extends Activity {
 	 * 
 	 * TODO:describe comment
 	 */
-	public final void onClickEndMusic(final View view) {
+	public void onClickEndMusic(final View view) {
 		if (player != null) {
 			player.stop();
 		}

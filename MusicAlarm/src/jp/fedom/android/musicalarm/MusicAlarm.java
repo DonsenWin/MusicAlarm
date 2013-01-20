@@ -8,16 +8,16 @@ import android.app.Application;
  * TODO:describe comment 
  *
  */
-public class MusicAlarm extends Application {
+public final class MusicAlarm extends Application {
      
     /**
-     * 
+     * This is dummy constructor
      * 
      * 
      * TODO:describe comment 
      */
      public MusicAlarm(){
-          
+    	 super();
      }
 
 }
