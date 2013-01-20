@@ -1,3 +1,4 @@
+// CHECKSTYLE:OFF
 /*package jp.fedom.android.musicalarm.test.activity;
 
 import jp.fedom.android.musicalarm.MainActivity;
@@ -43,3 +44,4 @@ public class MainActivityTest extends
 
 }
 */
+// CHECKSTYLE:ON

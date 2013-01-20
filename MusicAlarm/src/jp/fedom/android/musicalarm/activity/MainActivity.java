@@ -17,9 +17,8 @@ import android.view.View;
 import android.widget.TextView;
 
 /**
- * 
+ * This is dummy comment.
  * @author taka2
- * 
  */
 public final class MainActivity extends Activity {
 
@@ -37,8 +36,8 @@ public final class MainActivity extends Activity {
 
 	@Override
 	/**
-	 * 
-	 * TODO:describe comment 
+     * This is dummy comment.
+	 * TODO:describe comment
 	 */
 	public void onCreate(final Bundle savedState /*=savedInstanceState*/) {
 		super.onCreate(savedState);
@@ -48,7 +47,7 @@ public final class MainActivity extends Activity {
 	}
 
 	/**
-	 * 
+     * This is dummy comment.
 	 * TODO:describe comment
 	 */
 	private void prepareBlueTooth() {
@@ -73,7 +72,7 @@ public final class MainActivity extends Activity {
 	}
 
 	/**
-	 * 
+     * This is dummy comment.
 	 * TODO:describe comment
 	 */
 	private void showMessage(final String string) {
@@ -84,8 +83,8 @@ public final class MainActivity extends Activity {
 
 	@Override
 	/**
-	 * 
-	 * TODO:describe comment 
+     * This is dummy comment.
+	 * TODO:describe comment
 	 */
 	public boolean onCreateOptionsMenu(final Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
@@ -94,7 +93,7 @@ public final class MainActivity extends Activity {
 	}
 
 	/**
-	 * 
+     * This is dummy comment.
 	 * TODO:describe comment
 	 */
 	public void onClickStartMusic(final View view) {
@@ -127,8 +126,8 @@ public final class MainActivity extends Activity {
 
 	@Override
 	/**
-	 * 
-	 * TODO:describe comment 
+     * This is dummy comment.
+	 * TODO:describe comment
 	 */
 	public void onDestroy() {
 		onClickEndMusic(null);
@@ -137,7 +136,7 @@ public final class MainActivity extends Activity {
 	}
 
 	/**
-	 * 
+     * This is dummy comment.
 	 * TODO:describe comment
 	 */
 	public void onClickUpdateBlueToothStatus(final View view) {
@@ -145,7 +144,7 @@ public final class MainActivity extends Activity {
 	}
 
 	/**
-	 * 
+     * This is dummy comment.
 	 * TODO:describe comment
 	 */
 	public void onClickEndMusic(final View view) {

@@ -109,6 +109,9 @@
         <!-- Checks for Size Violations.                    -->
         <!-- See http://checkstyle.sf.net/config_sizes.html -->
         <module name="LineLength"/>
+        <!-- 2013.1.20 takahiro fix max. -->
+          <property name="max" value="120"/>
+        </module>
         <module name="MethodLength"/>
         <module name="ParameterNumber"/>
 
@@ -174,7 +177,9 @@
         <!-- See http://checkstyle.sf.net/config_misc.html -->
         <module name="ArrayTypeStyle"/>
         <module name="FinalParameters"/>
-        <module name="TodoComment"/>
+        <!-- 2013.1.20 takahiro diabled [ToDoComment].
+             todo list is managed other app -->
+        <!-- <module name="TodoComment"/> -->
         <module name="UpperEll"/>
 
     </module>
