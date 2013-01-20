@@ -9,7 +9,7 @@
     <instrumentation
         android:functionalTest="true"
         android:handleProfiling="true"
-        android:name="android.test.InstrumentationTestRunner"
+        android:name="jp.fedom.android.musicalarm.test.AllTests"
         android:targetPackage="jp.fedom.android.musicalarm" />
 
     <application
