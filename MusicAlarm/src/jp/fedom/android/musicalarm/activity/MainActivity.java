@@ -4,13 +4,9 @@ import java.io.IOException;
 import java.util.Set;
 
 import jp.fedom.android.musicalarm.R;
-import jp.fedom.android.musicalarm.R.id;
-import jp.fedom.android.musicalarm.R.layout;
-import jp.fedom.android.musicalarm.R.menu;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.os.ParcelUuid;
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -20,65 +16,93 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.TextView;
 
-public class MainActivity extends Activity {
+/**
+ * 
+ * @author taka2
+ * 
+ */
+public final class MainActivity extends Activity {
 
 	public static final String TAG = "MainActivity";
-	public static MediaPlayer player;
-	public static AudioManager manager;
+	private MediaPlayer player;
+	private AudioManager manager;
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	/**
+	 * 
+	 * TODO:describe comment 
+	 */
+	public final void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
 		prepareBlueTooth();
-
 	}
 
-	private void prepareBlueTooth() {
-		BluetoothAdapter bt = BluetoothAdapter.getDefaultAdapter();
-		if (!bt.equals(null)) {
-			showMessage("bluetoothをサポートしています");
-		} else {
+	/**
+	 * 
+	 * TODO:describe comment
+	 */
+	private final void prepareBlueTooth() {
+		final BluetoothAdapter bt = BluetoothAdapter.getDefaultAdapter();
+		if (bt == null) {
 			showMessage("bluetoothをサポートしていません。");
 			return;
-		}
-
-		if (bt.isEnabled()) {
-			showMessage("bluetoothは有効です。");
 		} else {
-			showMessage("bluetoothは無効です。");
+			showMessage("bluetoothをサポートしています");
+
+			if (bt.isEnabled()) {
+				showMessage("bluetoothは有効です。");
+				final Set<BluetoothDevice> pairedDevices = bt.getBondedDevices();
+				for (final BluetoothDevice device : pairedDevices) {
+					showMessage("name : " + device.getName() + " address : "
+							+ device.getAddress() + " status : "
+							+ device.getBondState());
+				}
+			} else {
+				showMessage("bluetoothは無効です。");
+			}
 		}
 
-		Set<BluetoothDevice> pairedDevices = bt.getBondedDevices();
-		for (BluetoothDevice device : pairedDevices) {
-			showMessage("name : " + device.getName() + " address : "
-					+ device.getAddress() + " status : "
-					+ device.getBondState());
-		}
 	}
 
-	private void showMessage(String string) {
+	/**
+	 * 
+	 * TODO:describe comment
+	 */
+	private final void showMessage(final String string) {
 		((TextView) findViewById(R.id.message))
 				.setText(((TextView) findViewById(R.id.message)).getText()
 						.toString() + "\n" + string);
 	}
 
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
+	/**
+	 * 
+	 * TODO:describe comment 
+	 */
+	public final boolean onCreateOptionsMenu(final Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.activity_main, menu);
 		return true;
 	}
 
-	public void onClickStartMusic(View view) {
+	/**
+	 * 
+	 * TODO:describe comment
+	 */
+	public final void onClickStartMusic(final View view) {
 		Log.v(TAG, "called onClickStartMusic");
+		if (manager != null || player != null) {
+			onClickEndMusic(null);
+		}
+
 		manager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
 		manager.setBluetoothScoOn(true);
 		manager.setMode(AudioManager.MODE_IN_CALL);
 
 		player = new MediaPlayer();
-		String path = "/mnt/sdcard/media/audio/01 情熱大陸2007.mp3";
+		final String path = "/mnt/sdcard/media/audio/01 情熱大陸2007.mp3";
 		try {
 			player.setDataSource(path);
 			player.setAudioStreamType(AudioManager.STREAM_VOICE_CALL);
@@ -99,16 +123,29 @@ public class MainActivity extends Activity {
 	}
 
 	@Override
-	public void onDestroy() {
-		super.onDestroy();
+	/**
+	 * 
+	 * TODO:describe comment 
+	 */
+	public final void onDestroy() {
 		onClickEndMusic(null);
+
+		super.onDestroy();
 	}
 
-	public void onClickUpdateBlueToothStatus(View view) {
+	/**
+	 * 
+	 * TODO:describe comment
+	 */
+	public final void onClickUpdateBlueToothStatus(final View view) {
 		prepareBlueTooth();
 	}
 
-	public void onClickEndMusic(View view) {
+	/**
+	 * 
+	 * TODO:describe comment
+	 */
+	public final void onClickEndMusic(final View view) {
 		if (player != null) {
 			player.stop();
 		}

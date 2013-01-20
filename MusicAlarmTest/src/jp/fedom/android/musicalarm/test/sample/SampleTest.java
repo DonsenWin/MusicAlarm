@@ -2,32 +2,38 @@ package jp.fedom.android.musicalarm.test.sample;
 
 import junit.framework.TestCase;
 
-public class SampleTest extends TestCase {
+public final class SampleTest extends TestCase {
 
-	/**
+    /**
 	 * @param name
 	 */
-	public SampleTest(String name) {
+	public SampleTest(final String name) {
 		super(name);
 	}
 
 	/**
 	 * 
+	 * TODO:describe comment 
 	 */
-	protected void setUp() throws Exception {
+
+	protected final void setUp() throws Exception {
 		super.setUp();
 	}
 
 	/**
 	 * 
+	 * TODO:describe comment 
 	 */
-	protected void tearDown() throws Exception {
+
+	protected final void tearDown() throws Exception {
 		super.tearDown();
 	}
 
 	/**
 	 * 
+	 * TODO:describe comment 
 	 */
+
 	public void test_sample() {
 		
 	}

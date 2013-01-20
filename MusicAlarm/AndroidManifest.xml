@@ -7,7 +7,9 @@
     <uses-sdk
         android:minSdkVersion="10"
         android:targetSdkVersion="21" />
-
+    <uses-permission android:name="android.permission.BLUETOOTH"/>
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
+    
     <application
         android:name="jp.fedom.android.musicalarm.MusicAlarm"
         android:allowBackup="true"
@@ -24,7 +26,5 @@
             </intent-filter>
         </activity>
     </application>
-    <uses-permission android:name="android.permission.BLUETOOTH"/>
-    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
     
 </manifest>
