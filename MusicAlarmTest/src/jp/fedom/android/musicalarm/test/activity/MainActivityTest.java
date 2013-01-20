@@ -14,7 +14,7 @@ public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActiv
 	 * 
 	 */
 	public MainActivityTest() {
-		super("jp.fedom.android.musicalarm.activity",MainActivity.class);
+		super(MainActivity.class);
 	}
 
 	/**
