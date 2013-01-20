@@ -35,16 +35,16 @@ public class MainActivity extends Activity {
 	private void prepareBlueTooth() {
 		BluetoothAdapter bt = BluetoothAdapter.getDefaultAdapter();
 		if (!bt.equals(null)) {
-			showMessage("bluetooth‚ğƒTƒ|[ƒg‚µ‚Ä‚¢‚Ü‚·");
+			showMessage("bluetoothã‚’ã‚µãƒãƒ¼ãƒˆã—ã¦ã„ã¾ã™");
 		} else {
-			showMessage("bluetooth‚ğƒTƒ|[ƒg‚µ‚Ä‚¢‚Ü‚¹‚ñB");
+			showMessage("bluetoothã‚’ã‚µãƒãƒ¼ãƒˆã—ã¦ã„ã¾ã›ã‚“ã€‚");
 			return;
 		}
 
 		if (bt.isEnabled()) {
-			showMessage("bluetooth‚Í—LŒø‚Å‚·B");
+			showMessage("bluetoothã¯æœ‰åŠ¹ã§ã™ã€‚");
 		} else {
-			showMessage("bluetooth‚Í–³Œø‚Å‚·B");
+			showMessage("bluetoothã¯ç„¡åŠ¹ã§ã™ã€‚");
 		}
 
 		Set<BluetoothDevice> pairedDevices = bt.getBondedDevices();
@@ -75,7 +75,7 @@ public class MainActivity extends Activity {
 		manager.setMode(AudioManager.MODE_IN_CALL);
 
 		player = new MediaPlayer();
-		String path = "/mnt/sdcard/media/audio/01 î”M‘å—¤2007.mp3";
+		String path = "/mnt/sdcard/media/audio/01 æƒ…ç†±å¤§é™¸2007.mp3";
 		try {
 			player.setDataSource(path);
 			player.setAudioStreamType(AudioManager.STREAM_VOICE_CALL);
