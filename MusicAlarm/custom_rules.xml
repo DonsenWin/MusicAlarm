@@ -1,0 +1,130 @@
+<project name="custom" default="findbugs">
+  <property environment="env" />
+  <property name="project.home"     value="${env.PROJECT_HOME}"/>
+  <property name="mainproject.home" value="${env.MAIN_PROJECT_HOME}"/>
+  <property name="testproject.home" value="${env.TEST_PROJECT_HOME}"/>
+  <property name="javadoc.package"  value="${env.JAVADOC_PACKAGE}"/>
+  <property name="findbugs.home"    value="${env.FINDBUGS_HOME}" />
+  <property name="pmd.home"         value="${env.PMD_HOME}" />
+  <property name="lint.script"      value="${sdk.dir}/tools/lint"/>
+  
+  <!-- switch lint command for linux and windows -->
+  <condition property="bash.it" value="/bin/bash" else="cmd">
+    <and>
+      <not> <os family="windows"/> </not>
+    </and>
+  </condition>
+
+  <!-- classpath for pmd target this used not only pmd,cpd-->
+  <path id="pmd.classpath">
+    <fileset dir="${pmd.home}/lib/">
+      <include name="*.jar"/>
+    </fileset>
+    <dirset dir="${project.home}/libs/">
+      <include name="pmd_rulesets"/>
+    </dirset>
+  </path>
+
+
+  <!-- generate findbugs report -->
+  <target name="findbugs">
+    <taskdef name="findbugs" classname="edu.umd.cs.findbugs.anttask.FindBugsTask"/>
+    <findbugs home="${findbugs.home}" 
+              reportLevel="low"
+              effort="max"
+              excludeFilter="${project.home}/libs/findbugs_exclude_filter.xml"
+              output="xml" 
+              outputFile="${project.home}/findbugs.xml">
+      <class  location="${mainproject.home}/bin" />
+      <sourcePath path="${mainproject.home}/src" />
+    </findbugs>
+  </target>
+
+  <!-- generate javadoc -->
+  <target name="javadoc" >        
+    <delete dir="${project.home}/javadoc" />
+    <mkdir  dir="${project.home}/javadoc" />
+    <javadoc packagenames="${javadoc.package}"
+             author="true"
+             version="true"
+             private="true"
+             destdir="${project.home}/javadoc"
+             encoding="UTF-8"
+             charset="UTF-8"
+             docencoding="UTF-8">
+      <fileset dir="${mainproject.home}/src" />
+      <fileset dir="${testproject.home}/src" />
+    </javadoc>
+  </target>
+  
+  <!-- generate lint report -->
+  <target name="lint">
+    <exec executable="${bash.it}">
+      <arg value="${lint.script}"/>
+      <arg value="-Wall"/>
+      <arg value="--html"/>
+      <arg value="${project.home}/lint_report.html"/>
+      <arg value="--xml"/>
+      <arg value="${project.home}/lint-results.xml"/>
+      <arg value="${project.home}"/>
+    </exec>
+  </target>
+  
+  <!-- generate checkstyle -->
+  <target name="checkstyle">
+    <taskdef name="checkstyle"
+             classname="com.puppycrawl.tools.checkstyle.CheckStyleTask"
+             classpath="${project.home}/libs/checkstyle-5.6-all.jar"/>
+    <checkstyle config="${project.home}/libs/checkstyle_config.xml"
+                maxErrors="2147483647"
+                maxWarnings="2147483647"
+                failOnViolation="true">
+      <formatter type="xml" tofile="${project.home}/checkstyle-result.xml"/>
+      <fileset dir="${mainproject.home}/src" includes="**/*.java"/>
+      <fileset dir="${testproject.home}/src" includes="**/*.java"/>
+    </checkstyle>
+<!-- 
+     below code is for html report.
+     you can chouse xsl from several templete
+-->
+<!-- 
+     <style in="${project.home}/libs/checkstyle_config.xml" 
+          out="${project.home}/checkstyle_report.html" 
+          style="${project.home}/libs/checkstyle_xslt/checkstyle-simple.xsl"/>
+-->
+  </target>        
+
+
+
+  <!-- generate pmd -->
+  <target name="pmd">
+    <taskdef name="pmd" 
+             classname="net.sourceforge.pmd.ant.PMDTask" 
+             classpathref="pmd.classpath"/>
+    <pmd rulesetfiles="${project.home}/libs/pmd_ruleset.xml">
+      <formatter type="xml" toFile="${project.home}/pmd.xml"/>
+        <fileset dir="${mainproject.home}/src">
+          <include name="**/*.java"/>
+        </fileset>
+    </pmd>
+  </target>
+
+  <!-- generate cpd 
+       this target use pmd.classpath -->
+  <target name="cpd">
+    <taskdef name="cpd" classname="net.sourceforge.pmd.cpd.CPDTask" classpathref="pmd.classpath" />        
+    <cpd minimumTokenCount="30" 
+         language="java"
+         format="xml" 
+         outputFile="${project.home}/cpd.xml">
+      <fileset dir="${mainproject.home}/src">
+        <include name="**/*.java"/>
+      </fileset>
+      <!-- test project include for only example.CPD-->
+      <fileset dir="${testproject.home}/src">
+          <include name="**/*.java"/>
+      </fileset>
+    </cpd>
+  </target>
+
+</project>
