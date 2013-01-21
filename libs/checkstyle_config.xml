@@ -108,7 +108,7 @@
 
         <!-- Checks for Size Violations.                    -->
         <!-- See http://checkstyle.sf.net/config_sizes.html -->
-        <module name="LineLength"/>
+        <module name="LineLength">
         <!-- 2013.1.20 takahiro fix max. -->
           <property name="max" value="120"/>
         </module>
