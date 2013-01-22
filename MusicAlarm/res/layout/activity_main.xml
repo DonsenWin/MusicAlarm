@@ -28,14 +28,30 @@
         android:layout_toRightOf="@+id/stopButton"
         android:onClick="onClickUpdateBlueToothStatus"
         android:text="@string/update" />
+
+    <Button
+        android:id="@+id/connectButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/startButton"
+        android:onClick="onClickCoonectBlueToothStatus"
+        android:text="@string/connect" />
     
+    <Button
+        android:id="@+id/disconnectButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/startButton"
+        android:layout_toRightOf="@+id/connectButton"
+        android:onClick="onClickDisconectBlueToothStatus"
+        android:text="@string/disconnect" />
     
 
     <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
-            android:layout_below="@+id/startButton"
+            android:layout_below="@+id/connectButton"
         >
 
         <TextView

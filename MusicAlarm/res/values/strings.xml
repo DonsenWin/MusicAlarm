@@ -7,5 +7,7 @@
     <string name="start">MusicStart!</string>
     <string name="stop">Stop Music</string>
     <string name="update">Update</string>
+    <string name="connect">Connect</string>
+    <string name="disconnect">Disconnect</string>
     
 </resources>
