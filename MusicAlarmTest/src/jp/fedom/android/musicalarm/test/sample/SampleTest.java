@@ -32,6 +32,6 @@ public final class SampleTest extends TestCase {
 	 * TODO:describe comment 
 	 */
 	public void test_sample() {
-		assertEquals(true, true);
+		assertTrue(3 == 1+2);
 	}
 }
