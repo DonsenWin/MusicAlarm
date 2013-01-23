@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="80dp" >
+
+    <ToggleButton
+        android:id="@+id/config_enable_toggle"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true" />
+
+    <TextView
+        android:id="@+id/config_title_text"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/config_enable_toggle"
+        android:text="@string/config_title_default"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/config_music_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/config_title_text"
+        android:layout_alignParentBottom="true"
+        android:text="@string/config_music_default" />
+
+    <TextView
+        android:id="@+id/config_devicename_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/config_music_text"
+        android:layout_toRightOf="@+id/config_enable_toggle"
+        android:text="@string/config_devicename_default" />
+
+    <TextView
+        android:id="@+id/config_time_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/config_time_title_text"
+        android:layout_toRightOf="@+id/config_devicename_text"
+        android:text="@string/config_time_default"
+        android:textSize="40sp" />
+
+    <TextView
+        android:id="@+id/config_time_title_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/config_time_text"
+        android:layout_below="@+id/config_title_text"
+        android:text="@string/config_time_title" />
+    
+</RelativeLayout>

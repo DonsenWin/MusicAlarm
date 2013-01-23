@@ -1,64 +1,34 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainActivity" >
+    android:layout_height="match_parent" >
 
-    <Button
-        android:id="@+id/startButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:onClick="onClickStartMusic"
-        android:text="@string/start" />
+    <LinearLayout
+        android:id="@+id/headButtons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
 
-    <Button
-        android:id="@+id/stopButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/startButton"
-        android:onClick="onClickEndMusic"
-        android:text="@string/stop" />
-    <Button
-        android:id="@+id/updateButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/stopButton"
-        android:onClick="onClickUpdateBlueToothStatus"
-        android:text="@string/update" />
-
-    <Button
-        android:id="@+id/connectButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/startButton"
-        android:onClick="onClickCoonectBlueToothStatus"
-        android:text="@string/connect" />
-    
-    <Button
-        android:id="@+id/disconnectButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/startButton"
-        android:layout_toRightOf="@+id/connectButton"
-        android:onClick="onClickDisconectBlueToothStatus"
-        android:text="@string/disconnect" />
-    
-
-    <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_alignParentRight="true"
-            android:layout_below="@+id/connectButton"
-        >
-
-        <TextView
-            android:id="@+id/message"
-            android:layout_width="match_parent"
+        <Button
+            android:id="@+id/MusicStartButton"
+            android:layout_width="0px"
             android:layout_height="wrap_content"
-            android:text="" />
-    </ScrollView>
+            android:layout_weight="1"
+            android:onClick="onClickStartMusic"
+            android:text="@string/start" />
+
+        <Button
+            android:id="@+id/MusicEndButton"
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="onClickStopMusic"
+            android:text="@string/stop" />
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/ConfigList"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/headButtons" />
 
 </RelativeLayout>

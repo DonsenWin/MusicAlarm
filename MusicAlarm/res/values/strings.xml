@@ -6,8 +6,10 @@
     <string name="title_activity_main">MainActivity</string>
     <string name="start">MusicStart!</string>
     <string name="stop">Stop Music</string>
-    <string name="update">Update</string>
-    <string name="connect">Connect</string>
-    <string name="disconnect">Disconnect</string>
+    <string name="config_time_default">00:00</string>
+    <string name="config_title_default">SampleTitle</string>
+    <string name="config_devicename_default">SampleDeviceName</string>
+    <string name="config_music_default">MusicFileName</string>
+    <string name="config_time_title">AlarmTime</string>
     
 </resources>
