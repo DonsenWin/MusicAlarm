@@ -35,6 +35,6 @@ public final class SampleTest extends TestCase {
 	 */
 
 	public void test_sample() {
-		
+		assertEquals(true, true);
 	}
 }

@@ -1,6 +1,7 @@
 package jp.fedom.android.musicalarm.activity;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import jp.fedom.android.musicalarm.R;
 import jp.fedom.android.musicalarm.item.ConfigItem;
@@ -28,6 +29,13 @@ public final class MainActivity extends Activity {
 
 	/* for logging */
 	public static final String TAG = "MainActivity";
+	
+	/* for test MacAddress of Speaker*/
+	private static final String SPEAKER_MA = "30:F9:ED:8F:35:B0";
+
+	private static ListView listview;
+	private static List<ConfigItem> dataList;
+	private static ConfigAdapter adapter;
 
 	private class ConfigAdapter extends BaseAdapter {
 
@@ -37,24 +45,25 @@ public final class MainActivity extends Activity {
 		}
 
 		@Override
-		public Object getItem(int index) {
+		public Object getItem(final int index) {
 			return dataList.get(index);
 		}
 
 		@Override
-		public long getItemId(int arg0) {
-			// TODO Auto-generated method stub
-			return 0;
+		public long getItemId(final int index) {
+			// TODO : what is ItemID for adapter?
+			return index;
 		}
 
 		@Override
-		public View getView(int position, View convertView, ViewGroup parent) {
-			if (convertView == null) {
-				LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-				convertView = inflater
+		public View getView(final int position,final View convertView, final ViewGroup parent) {
+			View view = convertView;
+			if (view == null) {
+				final LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+				view   = inflater
 						.inflate(R.layout.configlist_layout, null);
 			}
-			ConfigItem citem = (ConfigItem) getItem(position);
+			final ConfigItem citem = (ConfigItem) getItem(position);
 			if (citem != null) {
 				((TextView) convertView.findViewById(R.id.config_title_text))
 						.setText(citem.getTitle());
@@ -63,14 +72,11 @@ public final class MainActivity extends Activity {
 				((TextView) convertView.findViewById(R.id.config_music_text))
 						.setText(citem.getMusicFilePath());
 			}
-			return convertView;
+			return view;
 		}
 
 	}
 
-	ListView listview;
-	ArrayList<ConfigItem> dataList = new ArrayList<ConfigItem>(); 
-	ConfigAdapter adapter;
 	@Override
 	/**
 	 * This is dummy comment.
@@ -78,17 +84,17 @@ public final class MainActivity extends Activity {
 	 */
 	public void onCreate(final Bundle savedState /* =savedInstanceState */) {
 		super.onCreate(savedState);
-	   setContentView(R.layout.activity_main);
-	   listview = (ListView)findViewById(R.id.ConfigList);
-	    dataList.add(new ConfigItem());
-	    dataList.add(new ConfigItem());
-	    dataList.add(new ConfigItem());
-	    dataList.add(new ConfigItem());
-	    dataList.add(new ConfigItem());
-	    adapter = new ConfigAdapter();
-	  adapter.notifyDataSetChanged();
-	   listview.setAdapter(adapter);
-
+		setContentView(R.layout.activity_main);
+		dataList = new ArrayList<ConfigItem>();
+		listview = (ListView) findViewById(R.id.ConfigList);
+		dataList.add(new ConfigItem());
+		dataList.add(new ConfigItem());
+		dataList.add(new ConfigItem());
+		dataList.add(new ConfigItem());
+		dataList.add(new ConfigItem());
+		adapter = new ConfigAdapter();
+		adapter.notifyDataSetChanged();
+		listview.setAdapter(adapter);
 	}
 
 	@Override
@@ -102,27 +108,24 @@ public final class MainActivity extends Activity {
 		return true;
 	}
 
-	@Override
 	/**
 	 * This is dummy comment.
 	 * TODO:describe comment
+	 * @param v
 	 */
-	public void onDestroy() {
-		super.onDestroy();
+	public void onClickStartMusic(final View view) {
+		BluetoothA2DPWrapper.getInstance().connect(SPEAKER_MA);
+		MusicWapper.getInstance().start((AudioManager) getSystemService(Context.AUDIO_SERVICE));
 	}
-	
-	public void onClickStartMusic(View v){
-		BluetoothA2DPWrapper b = BluetoothA2DPWrapper.getInstance();
-		b.connect("30:F9:ED:8F:35:B0");
-		MusicWapper m = MusicWapper.getInstance();
-		m.start((AudioManager)getSystemService(Context.AUDIO_SERVICE));
-		
-	}
-	public void onClickStopMusic(View v){
-		BluetoothA2DPWrapper b = BluetoothA2DPWrapper.getInstance();
-		b.disconnect("30:F9:ED:8F:35:B0");
-		MusicWapper m = MusicWapper.getInstance();
-		m.stop();
+
+	/**
+	 * This is dummy comment.
+	 * TODO:describe comment
+	 * @param v
+	 */
+	public void onClickStopMusic(final View view) {
+		BluetoothA2DPWrapper.getInstance().disconnect(SPEAKER_MA);
+		MusicWapper.getInstance().stop();
 	}
 
 }

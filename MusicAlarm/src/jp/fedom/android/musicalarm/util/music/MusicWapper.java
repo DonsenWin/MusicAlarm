@@ -4,8 +4,10 @@ import java.io.IOException;
 
 import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.util.Log;
 
 /**
+ * 
  * 
  * @author taka
  *
@@ -13,8 +15,11 @@ import android.media.MediaPlayer;
 public enum MusicWapper {
 	instance;
 	
+	/* tag for log */
+	private static final String TAG = "MusicWapper";
+	
 	/* for test */
-	private final String MUSIC_FILE_PATH = "/mnt/sdcard/media/audio/01.mp3";
+	private static final String MUSIC_FILE_PATH = "/mnt/sdcard/media/audio/01.mp3";
 
 	/* Music Player TODO:create class */
 	private MediaPlayer player;
@@ -34,7 +39,12 @@ public enum MusicWapper {
 	 * getSystemService(Context.AUDIO_SERVICE)
 	 * @param manager
 	 */
-	public void start(AudioManager manager){ 
+	public void start(final AudioManager manager){
+		
+		if (manager == null){
+			Log.w(TAG, "called start with null");
+			return;
+		}
 		if (manager != null || player != null) {
 			stop();
 		}
@@ -49,13 +59,13 @@ public enum MusicWapper {
 			player.setAudioStreamType(AudioManager.STREAM_VOICE_CALL);
 			player.prepare();
 		} catch (IllegalArgumentException e) {
-			e.printStackTrace();
+			Log.e(TAG, "IllegalArgumentException", e);
 		} catch (SecurityException e) {
-			e.printStackTrace();
+			Log.e(TAG, "SecurityException", e);
 		} catch (IllegalStateException e) {
-			e.printStackTrace();
+			Log.e(TAG, "IllegalStateException", e);
 		} catch (IOException e) {
-			e.printStackTrace();
+			Log.e(TAG, "IOException", e);
 		}
 
 		player.start();
