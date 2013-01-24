@@ -16,7 +16,7 @@ public class MainActivityTest extends
 	 * 
 	 */
 	public MainActivityTest() {
-		super(jp.fedom.android.musicalarm.activity.MainActivity.class);
+		super("(jp.fedom.android.musicalarm.activity",jp.fedom.android.musicalarm.activity.MainActivity.class);
 	}
 
 	/**
