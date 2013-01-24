@@ -13,7 +13,7 @@
         android:functionalTest="true"
         android:handleProfiling="true"
         android:name="jp.fedom.android.musicalarm.test.AllTests"
-        android:targetPackage="jp.fedom.android.musicalarm.test" />
+        android:targetPackage="jp.fedom.android.musicalarm" />
      
     <application
         android:icon="@drawable/ic_launcher"
