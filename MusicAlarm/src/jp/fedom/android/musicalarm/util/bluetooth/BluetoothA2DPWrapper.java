@@ -12,64 +12,59 @@ import android.util.Log;
 public enum BluetoothA2DPWrapper {
 	instance;
 
-	public void BlutoothA2DPWapper(){
-		prepareBlueTooth();
-	}
-	
+	/**
+	 * 
+	 * @return
+	 */
 	public static BluetoothA2DPWrapper getInstance(){
 		return instance;
 	}
-	
-	/**
-	 * This is dummy comment. TODO:describe comment
-	 */
-	private void prepareBlueTooth() {
-		final BluetoothAdapter bluetooth = BluetoothAdapter.getDefaultAdapter();
-		if (bluetooth == null) {
-			//showMessage("bluetoothをサポートしていません。");
-		} else {
-			bluetooth.cancelDiscovery();
-			//showMessage("bluetoothをサポートしています");
-			if (bluetooth.isEnabled()) {
-				// showMessage("bluetoothは有効です。");
-			} else {
-				//showMessage("bluetoothは無効です。");
-			}
-		}
 
-	}
-	public void connect(String macAddress){
-		IBluetoothA2dp ibta = getIBluetoothA2dp();
+	/**
+	 * 
+	 * @param macAddress
+	 */
+	public void connect(final String macAddress){
+		final IBluetoothA2dp ibta = getIBluetoothA2dp();
 		if (ibta != null) {
 			final BluetoothAdapter bluetooth = BluetoothAdapter.getDefaultAdapter();
-			BluetoothDevice device = (BluetoothDevice) bluetooth.getRemoteDevice(macAddress);
+			bluetooth.cancelDiscovery();
+			final BluetoothDevice device = (BluetoothDevice) bluetooth.getRemoteDevice(macAddress);
 			try {
 				if (android.os.Build.VERSION.SDK_INT < 11) {
 					ibta.connectSink(device);
 				} else {
+					Log.i("VERSION","this is over SDK 11");
 					// TODO: for 4.2 http://code.google.com/p/a2dp-connect/issues/detail?id=11
 					// ibta.connect(device);
 				}
 			} catch (RemoteException e) {
-				e.printStackTrace();
+				Log.e("connect","RemoteException",e);
 			}
 		}
 	}
 	
-	public void disconnect(String macAddress){
-		IBluetoothA2dp ibta = getIBluetoothA2dp();
+	/**
+	 * 
+	 * @param macAddress
+	 */
+	public void disconnect(final String macAddress) {
+		final IBluetoothA2dp ibta = getIBluetoothA2dp();
 		if (ibta != null) {
 			final BluetoothAdapter bluetooth = BluetoothAdapter.getDefaultAdapter();
-			BluetoothDevice device = (BluetoothDevice) bluetooth.getRemoteDevice(macAddress);
+			bluetooth.cancelDiscovery();
+			final BluetoothDevice device = (BluetoothDevice) bluetooth.getRemoteDevice(macAddress);
 			try {
 				if (android.os.Build.VERSION.SDK_INT < 11) {
 					ibta.disconnectSink(device);
 				} else {
-					// TODO: for 4.2 http://code.google.com/p/a2dp-connect/issues/detail?id=11
+					Log.i("VERSION","this is over SDK 11");
+					// TODO: for 4.2
+					// http://code.google.com/p/a2dp-connect/issues/detail?id=11
 					// ibta.connect(device);
 				}
 			} catch (RemoteException e) {
-				e.printStackTrace();
+				Log.e("connect", "RemoteException", e);
 			}
 		}
 	}
@@ -79,21 +74,24 @@ public enum BluetoothA2DPWrapper {
 	 * @return IBluetoothA2dp object. if can't create, return null
 	 */
 	private IBluetoothA2dp getIBluetoothA2dp() {
-		// TODO: create wrapper class 
 		IBluetoothA2dp ibta = null;
-			try {
-				Method m2 = Class.forName("android.os.ServiceManager").getDeclaredMethod("getService", String.class);
-				IBinder b = (IBinder) m2.invoke(null, "bluetooth_a2dp");
-				
-				Class<?> c = Class.forName("android.bluetooth.IBluetoothA2dp").getDeclaredClasses()[0];
-				Method m = c.getDeclaredMethod("asInterface", IBinder.class);
-				m.setAccessible(true);
-				
-				ibta = (IBluetoothA2dp) m.invoke(null, b);
-			} catch (Exception e) {
-				Log.e("flowlab", "Erroraco!!! " + e.getMessage());
-			}
-		
+		try {
+			final Method getServicemethod = Class.forName(
+					"android.os.ServiceManager").getDeclaredMethod(
+					"getService", String.class);
+			
+			final IBinder ibinder = (IBinder) getServicemethod.invoke(null,	"bluetooth_a2dp");
+
+			final Class<?> a2dpClass = Class.forName(
+					"android.bluetooth.IBluetoothA2dp").getDeclaredClasses()[0];
+			
+			final Method interfaceMethod = a2dpClass.getDeclaredMethod("asInterface", IBinder.class);
+			interfaceMethod.setAccessible(true);
+
+			ibta = (IBluetoothA2dp) interfaceMethod.invoke(null, ibinder);
+		} catch (Exception e) {
+			Log.e("flowlab", "Erroraco!!! " + e.getMessage());
+		}
 		return ibta;
 	}
 }

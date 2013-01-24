@@ -28,6 +28,11 @@ public final class MainActivity extends Activity {
 
 	/* for logging */
 	public static final String TAG = "MainActivity";
+	private ListView listview;
+	private ArrayList<ConfigItem> dataList = new ArrayList<ConfigItem>(); 
+	private ConfigAdapter adapter;
+	
+	private static final String SPEAKER_MAC_AD = "30:F9:ED:8F:35:B0";
 
 	private class ConfigAdapter extends BaseAdapter {
 
@@ -37,40 +42,36 @@ public final class MainActivity extends Activity {
 		}
 
 		@Override
-		public Object getItem(int index) {
+		public Object getItem(final int index) {
 			return dataList.get(index);
 		}
 
 		@Override
-		public long getItemId(int arg0) {
-			// TODO Auto-generated method stub
+		public long getItemId(final int itemId) {
 			return 0;
 		}
 
 		@Override
-		public View getView(int position, View convertView, ViewGroup parent) {
-			if (convertView == null) {
+		public View getView(final int position, final View convertView,final ViewGroup parent) {
+			View view = convertView;
+			if (view == null) {
 				LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-				convertView = inflater
-						.inflate(R.layout.configlist_layout, null);
+				view = inflater.inflate(R.layout.configlist_layout, null);
 			}
-			ConfigItem citem = (ConfigItem) getItem(position);
+			final ConfigItem citem = (ConfigItem) getItem(position);
 			if (citem != null) {
-				((TextView) convertView.findViewById(R.id.config_title_text))
+				((TextView) view.findViewById(R.id.config_title_text))
 						.setText(citem.getTitle());
-				((TextView) convertView.findViewById(R.id.config_time_text))
+				((TextView) view.findViewById(R.id.config_time_text))
 						.setText(citem.getTimeString());
-				((TextView) convertView.findViewById(R.id.config_music_text))
+				((TextView) view.findViewById(R.id.config_music_text))
 						.setText(citem.getMusicFilePath());
 			}
-			return convertView;
+			return view;
 		}
 
 	}
 
-	ListView listview;
-	ArrayList<ConfigItem> dataList = new ArrayList<ConfigItem>(); 
-	ConfigAdapter adapter;
 	@Override
 	/**
 	 * This is dummy comment.
@@ -102,27 +103,14 @@ public final class MainActivity extends Activity {
 		return true;
 	}
 
-	@Override
-	/**
-	 * This is dummy comment.
-	 * TODO:describe comment
-	 */
-	public void onDestroy() {
-		super.onDestroy();
-	}
 	
 	public void onClickStartMusic(View v){
-		BluetoothA2DPWrapper b = BluetoothA2DPWrapper.getInstance();
-		b.connect("30:F9:ED:8F:35:B0");
-		MusicWapper m = MusicWapper.getInstance();
-		m.start((AudioManager)getSystemService(Context.AUDIO_SERVICE));
-		
+		BluetoothA2DPWrapper.getInstance().connect(SPEAKER_MAC_AD);
+		MusicWapper.getInstance().start((AudioManager)getSystemService(Context.AUDIO_SERVICE));
 	}
 	public void onClickStopMusic(View v){
-		BluetoothA2DPWrapper b = BluetoothA2DPWrapper.getInstance();
-		b.disconnect("30:F9:ED:8F:35:B0");
-		MusicWapper m = MusicWapper.getInstance();
-		m.stop();
+		BluetoothA2DPWrapper.getInstance().disconnect(SPEAKER_MAC_AD);
+		MusicWapper.getInstance().stop();
 	}
 
 }
