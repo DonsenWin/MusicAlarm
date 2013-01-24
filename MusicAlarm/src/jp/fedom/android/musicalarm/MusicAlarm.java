@@ -15,11 +15,5 @@ public final class MusicAlarm extends Application {
      public MusicAlarm() {
          super();
      }
-
-     /**
-      * This is dummy constructor
-      * TODO:describe comment 
-      */
-
      
 }

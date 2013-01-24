@@ -29,13 +29,11 @@ public final class MainActivity extends Activity {
 
 	/* for logging */
 	public static final String TAG = "MainActivity";
+	private ListView listview;
+	private ArrayList<ConfigItem> dataList = new ArrayList<ConfigItem>(); 
+	private ConfigAdapter adapter;
 	
-	/* for test MacAddress of Speaker*/
-	private static final String SPEAKER_MA = "30:F9:ED:8F:35:B0";
-
-	private static ListView listview;
-	private static List<ConfigItem> dataList;
-	private static ConfigAdapter adapter;
+	private static final String SPEAKER_MAC_AD = "30:F9:ED:8F:35:B0";
 
 	private class ConfigAdapter extends BaseAdapter {
 
@@ -50,26 +48,25 @@ public final class MainActivity extends Activity {
 		}
 
 		@Override
-		public long getItemId(final int index) {
-			// TODO : what is ItemID for adapter?
-			return index;
+
+		public long getItemId(final int itemId) {
+			return itemId;
 		}
 
 		@Override
-		public View getView(final int position,final View convertView, final ViewGroup parent) {
+		public View getView(final int position, final View convertView,final ViewGroup parent) {
 			View view = convertView;
 			if (view == null) {
-				final LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-				view   = inflater
-						.inflate(R.layout.configlist_layout, null);
+				LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+				view = inflater.inflate(R.layout.configlist_layout, null);
 			}
 			final ConfigItem citem = (ConfigItem) getItem(position);
 			if (citem != null) {
-				((TextView) convertView.findViewById(R.id.config_title_text))
+				((TextView) view.findViewById(R.id.config_title_text))
 						.setText(citem.getTitle());
-				((TextView) convertView.findViewById(R.id.config_time_text))
+				((TextView) view.findViewById(R.id.config_time_text))
 						.setText(citem.getTimeString());
-				((TextView) convertView.findViewById(R.id.config_music_text))
+				((TextView) view.findViewById(R.id.config_music_text))
 						.setText(citem.getMusicFilePath());
 			}
 			return view;
@@ -108,23 +105,13 @@ public final class MainActivity extends Activity {
 		return true;
 	}
 
-	/**
-	 * This is dummy comment.
-	 * TODO:describe comment
-	 * @param v
-	 */
-	public void onClickStartMusic(final View view) {
-		BluetoothA2DPWrapper.getInstance().connect(SPEAKER_MA);
-		MusicWapper.getInstance().start((AudioManager) getSystemService(Context.AUDIO_SERVICE));
+	
+	public void onClickStartMusic(View v){
+		BluetoothA2DPWrapper.getInstance().connect(SPEAKER_MAC_AD);
+		MusicWapper.getInstance().start((AudioManager)getSystemService(Context.AUDIO_SERVICE));
 	}
-
-	/**
-	 * This is dummy comment.
-	 * TODO:describe comment
-	 * @param v
-	 */
-	public void onClickStopMusic(final View view) {
-		BluetoothA2DPWrapper.getInstance().disconnect(SPEAKER_MA);
+	public void onClickStopMusic(View v){
+		BluetoothA2DPWrapper.getInstance().disconnect(SPEAKER_MAC_AD);
 		MusicWapper.getInstance().stop();
 	}
 
