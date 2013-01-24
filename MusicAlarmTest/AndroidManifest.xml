@@ -12,9 +12,8 @@
     <instrumentation
         android:functionalTest="true"
         android:handleProfiling="true"
-        android:name="android.test.InstrumentationTestRunner"
+        android:name="jp.fedom.android.musicalarm.test.AllTests"
         android:targetPackage="jp.fedom.android.musicalarm.test" />
-       <!--   android:name="jp.fedom.android.musicalarm.test.AllTests"-->
      
     <application
         android:icon="@drawable/ic_launcher"
