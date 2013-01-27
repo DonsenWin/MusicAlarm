@@ -1,20 +1,41 @@
 package jp.fedom.android.musicalarm.item;
 
+/**
+ * This is dummy comment.
+ * TODO: update comment
+ * @author taka2
+ *
+ */
 public class ConfigItem {
 
-	public String getTitle() {
-		// TODO Auto-generated method stub
-		return "SampleTitle";
-	}
+    /**
+     * This is dummy comment.
+     * TODO: update comment
+     * TODO: update implement
+     * @return title for Alarm Setting
+     */
+    public final String getTitle() {
+        return "SampleTitle";
+    }
 
-	public String getTimeString() {
-		// TODO Auto-generated method stub
-		return "01:00";
-	}
+    /**
+     * This is dummy comment.
+     * TODO: update comment
+     * TODO: update implement
+     * @return Time for Alarm Setting
+     */
+    public final String getTimeString() {
+        return "01:00";
+    }
 
-	public String getMusicFilePath() {
-		// TODO Auto-generated method stub
-		return "/path/to/musicfile";
-	}
+    /**
+     * This is dummy comment.
+     * TODO: update comment
+     * TODO: update implement
+     * @return Path for Alarm Setting
+     */
+    public final String getMusicFilePath() {
+        return "/path/to/musicfile";
+    }
 
 }

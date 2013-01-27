@@ -2,36 +2,45 @@ package jp.fedom.android.musicalarm.test.sample;
 
 import junit.framework.TestCase;
 
+/**
+ * This is dummy comment.
+ * TODO: update comment
+ * @author taka2
+ */
 public final class SampleTest extends TestCase {
 
     /**
-	 * @param name
-	 */
-	public SampleTest(final String name) {
-		super(name);
-	}
+     * This is dummy comment.
+     * TODO: update comment
+     * @param name testName
+    */
+   public SampleTest(final String name) {
+      super(name);
+   }
 
-	/**
-	 * 
-	 * TODO:describe comment 
-	 */
-	protected void setUp() throws Exception {
-		super.setUp();
-	}
+   /**
+    * This is dummy comment.
+    * TODO:describe comment
+    * @throws Exception dummy comment.
+    */
+   protected void setUp() throws Exception {
+      super.setUp();
+   }
 
-	/**
-	 * 
-	 * TODO:describe comment 
-	 */
-	protected void tearDown() throws Exception {
-		super.tearDown();
-	}
+   /**
+    * This is dummy comment.
+    * TODO:describe comment
+    * @throws Exception dummy comment.
+    */
+   protected void tearDown() throws Exception {
+      super.tearDown();
+   }
 
-	/**
-	 * 
-	 * TODO:describe comment 
-	 */
-	public void test_sample() {
-		assertTrue(3 == 1+2);
-	}
+   /**
+    * This is dummy comment.
+    * TODO:describe comment
+    */
+   public void test_sample() {
+      assertTrue(true);
+   }
 }

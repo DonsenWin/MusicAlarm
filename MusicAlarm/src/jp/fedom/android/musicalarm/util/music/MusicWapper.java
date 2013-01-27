@@ -7,79 +7,83 @@ import android.media.MediaPlayer;
 import android.util.Log;
 
 /**
- * 
- * 
- * @author taka
+ * This is dummy comment.
+ * TODO: update comment
+ * @author taka2
  *
  */
 public enum MusicWapper {
-	instance;
-	
-	/* tag for log */
-	private static final String TAG = "MusicWapper";
-	
-	/* for test */
-	private static final String MUSIC_FILE_PATH = "/mnt/sdcard/media/audio/01.mp3";
+    /** Singleton implement. */
+    instance;
 
-	/* Music Player TODO:create class */
-	private MediaPlayer player;
+    /** tag for log. */
+    private static final String TAG = "MusicWapper";
 
-	/* Audio Player TODO:create class */
-	private AudioManager manager;
-	
-	/**
-	 * for Singleton
-	 * @return singleInstance of this class
-	 */
-	public static MusicWapper getInstance() {
-		return instance;
-	}
-	
-	/**
-	 * getSystemService(Context.AUDIO_SERVICE)
-	 * @param manager
-	 */
-	public void start(final AudioManager manager){
-		
-		if (manager == null){
-			Log.w(TAG, "called start with null");
-			return;
-		}
-		if (manager != null || player != null) {
-			stop();
-		}
+    /** for test. */
+    private static final String MUSIC_FILE_PATH = "/mnt/sdcard/media/audio/01.mp3";
 
-		this.manager =  manager;
-		this.manager.setBluetoothScoOn(true);
-		this.manager.setMode(AudioManager.MODE_IN_CALL);
+    /** Music Player. */
+    private MediaPlayer musicPlayer;
 
-		player = new MediaPlayer();
-		try {
-			player.setDataSource(MUSIC_FILE_PATH);
-			player.setAudioStreamType(AudioManager.STREAM_VOICE_CALL);
-			player.prepare();
-		} catch (IllegalArgumentException e) {
-			Log.e(TAG, "IllegalArgumentException", e);
-		} catch (SecurityException e) {
-			Log.e(TAG, "SecurityException", e);
-		} catch (IllegalStateException e) {
-			Log.e(TAG, "IllegalStateException", e);
-		} catch (IOException e) {
-			Log.e(TAG, "IOException", e);
-		}
+    /** Audio Player. */
+    private AudioManager audioManager;
 
-		player.start();
-	}
-	
-	public void stop(){
-		if (player != null) {
-			player.stop();
-		}
+    /**
+     * for Singleton.
+     * @return singleInstance of this class
+     */
+    public static MusicWapper getInstance() {
+        return instance;
+    }
 
-		if (manager != null) {
-			manager.setMode(AudioManager.MODE_NORMAL);
-			manager.setBluetoothScoOn(false);
-		}
-	}
+    /**
+     * getSystemService(Context.AUDIO_SERVICE).
+     * @param manager please (AudioManager) getSystemService(Context.AUDIO_SERVICE)
+     */
+    public void start(final AudioManager manager) {
+        if (manager == null) {
+            Log.w(TAG, "called start with null");
+            return;
+        }
+        if (manager != null || musicPlayer != null) {
+            stop();
+        }
+
+        this.audioManager =  manager;
+        this.audioManager.setBluetoothScoOn(true);
+        this.audioManager.setMode(AudioManager.MODE_IN_CALL);
+
+        musicPlayer = new MediaPlayer();
+        try {
+            musicPlayer.setDataSource(MUSIC_FILE_PATH);
+            musicPlayer.setAudioStreamType(AudioManager.STREAM_VOICE_CALL);
+            musicPlayer.prepare();
+        } catch (IllegalArgumentException e) {
+            Log.e(TAG, "IllegalArgumentException", e);
+        } catch (SecurityException e) {
+            Log.e(TAG, "SecurityException", e);
+        } catch (IllegalStateException e) {
+            Log.e(TAG, "IllegalStateException", e);
+        } catch (IOException e) {
+            Log.e(TAG, "IOException", e);
+        }
+
+        musicPlayer.start();
+    }
+
+    /**
+     * This is dummy comment.
+     * TODO: update comment
+     */
+    public void stop() {
+        if (musicPlayer != null) {
+            musicPlayer.stop();
+        }
+
+        if (audioManager != null) {
+            audioManager.setMode(AudioManager.MODE_NORMAL);
+            audioManager.setBluetoothScoOn(false);
+        }
+    }
 
 }
