@@ -1,6 +1,7 @@
 package jp.fedom.android.musicalarm.activity;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import jp.fedom.android.musicalarm.R;
 import jp.fedom.android.musicalarm.item.ConfigItem;
@@ -33,18 +34,27 @@ public final class MainActivity extends Activity {
     private ListView listview;
 
     /** dummy comment. TODO:update comment */
-    private ArrayList<ConfigItem> dataList = new ArrayList<ConfigItem>();
-
-    /** dummy comment. TODO:update comment */
-    private ConfigAdapter adapter;
-
-    /** dummy comment. TODO:update comment */
     private static final String SPEAKER_MAC_AD = "30:F9:ED:8F:35:B0";
 
     /** dummy comment.
      *  TODO:update comment
      */
     private class ConfigAdapter extends BaseAdapter {
+
+        /** dummy comment. TODO:update comment */
+        private final List<ConfigItem> dataList = new ArrayList<ConfigItem>();
+
+        /**
+         * dummy comment.
+         * TODO:update comment
+         */
+        public ConfigAdapter() {
+          dataList.add(new ConfigItem());
+          dataList.add(new ConfigItem());
+          dataList.add(new ConfigItem());
+          dataList.add(new ConfigItem());
+          dataList.add(new ConfigItem());
+        }
 
         @Override
         public int getCount() {
@@ -91,14 +101,8 @@ public final class MainActivity extends Activity {
     public void onCreate(final Bundle savedState /* =savedInstanceState */) {
         super.onCreate(savedState);
         setContentView(R.layout.activity_main);
-        dataList = new ArrayList<ConfigItem>();
+        ConfigAdapter adapter = new ConfigAdapter();
         listview = (ListView) findViewById(R.id.ConfigList);
-        dataList.add(new ConfigItem());
-        dataList.add(new ConfigItem());
-        dataList.add(new ConfigItem());
-        dataList.add(new ConfigItem());
-        dataList.add(new ConfigItem());
-        adapter = new ConfigAdapter();
         adapter.notifyDataSetChanged();
         listview.setAdapter(adapter);
     }

@@ -4,6 +4,7 @@ import jp.fedom.android.musicalarm.activity.MainActivity;
 import android.app.Activity;
 import android.app.Instrumentation;
 import android.test.ActivityInstrumentationTestCase2;
+import android.util.Log;
 
 /**
  * This is dummy comment.
@@ -27,16 +28,19 @@ public class MainActivityTest extends
     }
 
 
+    @Override
     /**
      * This is dummy comment.
      * TODO: update comment
      * @throws Exception dummy comment.
      */
-    @Override
     protected final void setUp() throws Exception {
         super.setUp();
         targetActivity = getActivity();
         instrumention  = getInstrumentation();
+
+        Log.d("targetActivity", targetActivity.toString());
+        Log.d("instrumention",  instrumention.toString());
     }
 
 
@@ -54,8 +58,8 @@ public class MainActivityTest extends
      * This is dummy comment.
      * TODO: update comment
      */
-    public void test_sample() {
-
+    public final void test_sample() {
+        assertTrue(true);
     }
 
 }
