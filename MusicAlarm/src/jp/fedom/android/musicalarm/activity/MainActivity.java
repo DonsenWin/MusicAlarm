@@ -1,7 +1,6 @@
 package jp.fedom.android.musicalarm.activity;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import jp.fedom.android.musicalarm.R;
 import jp.fedom.android.musicalarm.item.ConfigItem;
@@ -20,8 +19,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.Adapter;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -107,9 +104,7 @@ public final class MainActivity extends Activity {
         public void onItemClick(AdapterView<?> adapter, View view, int position, long id) {
         	Log.i("Click","clicked List Item");
         	Intent intent = new Intent();
-            intent.setClassName(
-                    AlarmSettingsActivity.class.getName(),
-                    AlarmSettingsActivity.class.getCanonicalName());
+        	// start sum acticity
             startActivity(intent);
     	}
     	
