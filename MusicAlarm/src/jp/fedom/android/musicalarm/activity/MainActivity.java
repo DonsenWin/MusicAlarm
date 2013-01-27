@@ -12,10 +12,16 @@ import android.media.AudioManager;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Adapter;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -35,6 +41,7 @@ public final class MainActivity extends Activity {
 	
 	private static final String SPEAKER_MAC_AD = "30:F9:ED:8F:35:B0";
 
+    // TODO: pickup for file
 	private class ConfigAdapter extends BaseAdapter {
 
 		@Override
@@ -65,14 +72,71 @@ public final class MainActivity extends Activity {
 				((TextView) view.findViewById(R.id.config_title_text))
 						.setText(citem.getTitle());
 				((TextView) view.findViewById(R.id.config_time_text))
-						.setText(citem.getTimeString());
+						.setText(citem.getTime());
 				((TextView) view.findViewById(R.id.config_music_text))
-						.setText(citem.getMusicFilePath());
+						.setText(citem.getPath());
+				view.findViewById(R.id.config_music_text).setOnClickListener(new OnClickListener() {					
+					@Override
+					public void onClick(View v) {
+						Log.i("Click","music_text");
+					}
+				});
+				view.findViewById(R.id.config_time_text).setOnClickListener(new OnClickListener() {					
+					@Override
+					public void onClick(View v) {
+						Log.i("Click","config_time_text");
+					}
+				});
+				view.findViewById(R.id.config_title_text).setOnClickListener(new OnClickListener() {					
+					@Override
+					public void onClick(View v) {
+						Log.i("Click","config_title_text");
+					}
+				});
 			}
+			
 			return view;
 		}
 
 	}
+	
+    // TODO: pickup for file
+    class ListClickEvent implements AdapterView.OnItemClickListener {
+
+        // onItemClickメソッドには、AdapterView(adapter)、選択した項目View(TextView)、選択された位置のint値、IDを示すlong値が渡される
+        public void onItemClick(AdapterView<?> adapter, View view, int position, long id) {
+        	Log.i("Click","clicked List Item");
+        	Intent intent = new Intent();
+            intent.setClassName(
+                    AlarmSettingsActivity.class.getName(),
+                    AlarmSettingsActivity.class.getCanonicalName());
+            startActivity(intent);
+    	}
+    	
+    }
+    // TODO: pickup for file
+    class ListSelectEvent implements AdapterView.OnItemSelectedListener {
+
+		@Override
+		public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2,
+				long arg3) {
+        	Log.i("Click","onItemSelected");
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void onNothingSelected(AdapterView<?> arg0) {
+        	Log.i("Click","onNothingSelected");
+			// TODO Auto-generated method stub
+			
+		}
+
+
+    	
+    }
+
+
 
 	@Override
 	/**
@@ -92,6 +156,11 @@ public final class MainActivity extends Activity {
 		adapter = new ConfigAdapter();
 		adapter.notifyDataSetChanged();
 		listview.setAdapter(adapter);
+		listview.setOnItemClickListener(new ListClickEvent());
+		listview.setOnItemSelectedListener(new ListSelectEvent());
+    	Log.i("onCreate","onCreate");
+
+
 	}
 
 	@Override
