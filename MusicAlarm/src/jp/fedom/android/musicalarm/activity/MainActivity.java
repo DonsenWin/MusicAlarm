@@ -25,7 +25,7 @@ import android.widget.TextView;
 
 /**
  * This is dummy comment.
- * 
+ * TODO: update comment
  * @author taka2
  */
 public final class MainActivity extends Activity {
@@ -178,5 +178,4 @@ public final class MainActivity extends Activity {
 		BluetoothA2DPWrapper.getInstance().disconnect(SPEAKER_MAC_AD);
 		MusicWapper.getInstance().stop();
 	}
-
 }
