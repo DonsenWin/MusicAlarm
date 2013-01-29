@@ -1,51 +1,62 @@
 package jp.fedom.android.musicalarm.item;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONStringer;
 
-import android.content.Intent;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.AdapterView;
-
+/**
+ * dummy comment.
+ * TODO:update comment
+ * @author taka
+ */
 public class ConfigItem {
 
+    /** dummy comment. TODO:update comment */
+    private boolean enable;
+    /** dummy comment. TODO:update comment */
     private String title;
+    /** dummy comment. TODO:update comment */
     private String time;
+    /** dummy comment. TODO:update comment */
     private String path;
-    
-    public enum JsonGenerator{
+
+    /**
+     * dummy comment.
+     * @author taka
+     */
+    public enum JsonGenerator {
         /** singleton implement.*/
         jsonGenInstance;
-        
-        public static JsonGenerator getInstance(){
+
+        /**
+         * dummy comment.
+         * TODO:update comment
+         * @return singleton instance
+         */
+        public static JsonGenerator getInstance() {
             return jsonGenInstance;
         }
-        
-        public String genSingleJson(ConfigItem item) throws JSONException{
-             return  new JSONStringer()
-             .object()
-                 .key("time")
-                 .value(item.getTime())
-                 .key("title")
-                 .value(item.getTitle())
-                 .key("path")
-                 .value(item.getPath())
-             .endObject()
-             .toString();
-        }
 
-        public String genJson(ArrayList<ConfigItem> list) throws JSONException {
-            JSONArray array = new JSONArray();
-            JSONStringer stringer = new JSONStringer();
+        /**
+         * dummy comment.
+         * TODO:update comment
+         * @param list list from items
+         * @return singleton instance
+         * @throws JSONException if error.
+         */
+        public String genJson(final List<ConfigItem> list) throws JSONException {
+            final JSONArray array = new JSONArray();
+            final JSONStringer stringer = new JSONStringer();
             stringer.object().key("body").array();
-            for(ConfigItem item : list){
+            for (final ConfigItem item : list) {
                 array.put(stringer
                  .object()
+                 .key("enable")
+                 .value(item.isEnable())
                  .key("time")
                  .value(item.getTime())
                  .key("title")
@@ -54,73 +65,143 @@ public class ConfigItem {
                  .value(item.getPath())
                  .endObject());
             }
-            stringer.endArray();
-            return stringer.toString();
+            return stringer.endArray().endObject().toString();
         }
-        
     }
-    
-    public enum JsonParser{
+
+    /**
+     * dummy comment.
+     * @author taka
+     */
+    public enum JsonParser {
         /** singleton implement.*/
         jsonParserInstance;
-        
-        public static JsonParser getInstance(){
+
+        /**
+         * dummy comment.
+         * @return singleton instance
+         */
+        public static JsonParser getInstance() {
             return jsonParserInstance;
         }
-        
-        public ConfigItem parseSingle(String jsonString) throws JSONException{
-            JSONObject rootObject = new JSONObject(jsonString);
-            ConfigItem item = new ConfigItem();
-            item.setTime(rootObject.getString("time"));
-            item.setTitle(rootObject.getString("title"));
-            item.setPath(rootObject.getString("path"));
-            return item;
-        }
 
-        public ArrayList<ConfigItem> parse(String jsonString) throws JSONException{
-            JSONObject rootObject = new JSONObject(jsonString);
-            JSONArray array = rootObject.getJSONArray("body");
-            ArrayList<ConfigItem> list = new ArrayList<ConfigItem>();
-            for(int i = 0; i < array.length(); i++) {
-                JSONObject jsonObject = array.getJSONObject(i);
-                ConfigItem item = new ConfigItem();
-                item.setTime(jsonObject.getString("time"));
-                item.setTitle(jsonObject.getString("title"));
-                item.setPath(jsonObject.getString("path"));
-                list.add(item);
+        /**
+         * dummy comment.
+         * TODO:update comment
+         * @param jsonString jsonString
+         * @return List
+         * @throws JSONException if error.
+         */
+        public List<ConfigItem> parse(final String jsonString) throws JSONException {
+            final JSONObject rootObject = new JSONObject(jsonString);
+            final JSONArray array = rootObject.getJSONArray("body");
+            final ArrayList<ConfigItem> list = new ArrayList<ConfigItem>();
+            for (int i = 0; i < array.length(); i++) {
+                final JSONObject jsonObject = array.getJSONObject(i);
+                 list.add(new ConfigItem(
+                         jsonObject.getBoolean("enable"),
+                         jsonObject.getString("title"),
+                         jsonObject.getString("time"),
+                         jsonObject.getString("path")
+                         ));
             }
             return list;
         }
     }
-    
-    public ConfigItem(){
-        this.title="Initial Title";
-        this.time="Initial TimeString";
-        this.path="/path/to/file/path";
+
+    /**
+     * dummy comment.
+     * TODO: update comment
+     */
+    public ConfigItem() {
+        this(false, "Initial Title", "00:00", "/path/to/file/path");
     }
-                      
-    public String getTitle() {
+
+    /**
+     * dummy comment.
+     * TODO: update comment
+     * @param argEnable enable
+     * @param argTitle title
+     * @param argTime time
+     * @param argPath path
+     */
+    public ConfigItem(final boolean argEnable, final String argTitle, final String argTime, final String argPath) {
+        this.enable = argEnable;
+        this.title = argTitle;
+        this.time = argTime;
+        this.path = argPath;
+    }
+
+    /**
+     * dummy comment.
+     * TODO: update comment
+     * @return title
+     */
+    public final String getTitle() {
         return title;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    /**
+     * dummy comment.
+     * TODO: update comment
+     * @param argTitle title
+     */
+    public final void setTitle(final String argTitle) {
+        this.title = argTitle;
     }
 
-    public String getTime() {
+    /**
+     * dummy comment.
+     * TODO: update comment
+     * @return time
+     */
+    public final String getTime() {
         return time;
     }
 
-    public void setTime(String time) {
-        this.time = time;
+    /**
+     * dummy comment.
+     * TODO: update comment
+     * @param argTime time
+     */
+   public final void setTime(final String argTime) {
+        this.time = argTime;
     }
 
-    public String getPath() {
+   /**
+    * dummy comment.
+    * TODO: update comment
+     * @return path to music file
+    */
+  public final String getPath() {
         return path;
     }
 
-    public void setPath(String path) {
-        this.path = path;
+  /**
+   * dummy comment.
+   * TODO: update comment
+   * @param argPath path
+   */
+  public final void setPath(final String argPath) {
+        this.path = argPath;
     }
-    
+
+  /**
+   * dummy comment.
+   * TODO: update comment
+     * @return enable
+   */
+    public final boolean isEnable() {
+        return enable;
+    }
+
+  /**
+    * dummy comment.
+    * TODO: update comment
+    * @param argEnable enable
+    */
+    public final void setEnable(final boolean argEnable) {
+        this.enable = argEnable;
+    }
+
 }

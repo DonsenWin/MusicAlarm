@@ -24,11 +24,33 @@
             android:onClick="onClickStopMusic"
             android:text="@string/stop" />
     </LinearLayout>
+    <LinearLayout
+        android:id="@+id/alarmButtons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" 
+        android:layout_below="@+id/headButtons">
 
+        <Button
+            android:id="@+id/alarmStartButton"
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="onClickStartAlarm"
+            android:text="@string/alartStart" />
+
+        <Button
+            android:id="@+id/alarmEndButton"
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="onClickStopAlarm"
+            android:text="@string/alartStop" />
+    </LinearLayout>
+    
     <ListView
         android:id="@+id/ConfigList"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/headButtons" />
+        android:layout_below="@+id/alarmButtons" />
 
 </RelativeLayout>

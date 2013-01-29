@@ -1,8 +1,13 @@
 package jp.fedom.android.musicalarm.test.activity;
 
+import java.util.ArrayList;
+
 import jp.fedom.android.musicalarm.activity.MainActivity;
+import jp.fedom.android.musicalarm.item.ConfigItem;
+import jp.fedom.android.musicalarm.item.ConfigPreference;
 import android.app.Activity;
 import android.app.Instrumentation;
+import android.preference.PreferenceManager;
 import android.test.ActivityInstrumentationTestCase2;
 import android.util.Log;
 
@@ -59,7 +64,9 @@ public class MainActivityTest extends
      * TODO: update comment
      */
     public final void test_sample() {
-        assertTrue(true);
+        ConfigPreference pref = new ConfigPreference(PreferenceManager.getDefaultSharedPreferences(targetActivity));
+        ArrayList<ConfigItem> items = (ArrayList<ConfigItem>) pref.loadConfigItems();
+        assertTrue(items.size() > 0);
     }
 
 }

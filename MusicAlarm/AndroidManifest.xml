@@ -7,15 +7,16 @@
     <uses-sdk
         android:minSdkVersion="10"
         android:targetSdkVersion="17" />
-    <uses-permission android:name="android.permission.BLUETOOTH"/>
-    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
-    
+
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+
     <application
         android:name="jp.fedom.android.musicalarm.MusicAlarm"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme" >
         <activity
             android:name="jp.fedom.android.musicalarm.activity.MainActivity"
             android:label="@string/title_activity_main" >
@@ -24,6 +25,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="jp.fedom.android.musicalarm.activity.MusicActivity"
+            android:label="@string/title_activity_music" >
+        </activity>
     </application>
-    
+
 </manifest>

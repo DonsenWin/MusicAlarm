@@ -11,5 +11,9 @@
     <string name="config_devicename_default">SampleDeviceName</string>
     <string name="config_music_default">MusicFileName</string>
     <string name="config_time_title">AlarmTime</string>
-    
+    <string name="alartStart">alarmStart</string>
+    <string name="alartStop">alarmStop</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_music">MusicActivity</string>
+
 </resources>

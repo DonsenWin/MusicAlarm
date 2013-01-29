@@ -4,126 +4,118 @@ import java.util.ArrayList;
 
 import org.json.JSONException;
 
-import android.util.Log;
-
 import jp.fedom.android.musicalarm.item.ConfigItem;
 import junit.framework.TestCase;
 
+/**
+ * dummy comment.
+ * TODO:describe comment
+ */
 public final class ConfigItemTest extends TestCase {
 
     /**
-     * @param name
+     * @param name name
      */
     public ConfigItemTest(final String name) {
         super(name);
     }
 
     /**
-     * 
-     * TODO:describe comment 
+     * dummy comment.
+     * TODO:describe comment
+     * @throws Exception exception
      */
     protected void setUp() throws Exception {
         super.setUp();
     }
 
     /**
-     * 
-     * TODO:describe comment 
+     * dummy comment.
+     * TODO:describe comment
+     * @throws Exception exception
      */
     protected void tearDown() throws Exception {
         super.tearDown();
     }
 
     /**
-     * 
-     * TODO:describe comment 
-     */
-    public void test_innerJson_singleParse() {
-        final String jsonString = "{\"title\" : \"sampletitle\", \"time\" : \"00:00\", \"path\" : \"\\/path\\/to\\/file\"}";
-        ConfigItem item = null;
-        try {
-            item = ConfigItem.JsonParser.getInstance().parseSingle(jsonString);
-        } catch (JSONException e) {
-            fail();
-        }
-        assertEquals("sampletitle"   , item.getTitle());
-        assertEquals("00:00"         , item.getTime());
-        assertEquals("/path/to/file" , item.getPath());
-    }
-
-    /**
-     * 
-     * TODO:describe comment 
+     * dummy comment.
+     * TODO:describe comment
      */
     public void test_innerJson_mutilParse() {
-        final String jsonString = "{\"body\" : " +
-                                   "[" +
-                                   "{\"title\" : \"sampletitle\",  \"time\" : \"00:00\", \"path\" : \"\\/path\\/to\\/file\"}," +
-                                   "{\"title\" : \"sampletitle2\", \"time\" : \"01:00\", \"path\" : \"\\/path\\/to\\/file\\/2\"}" +
-                                   "]" +
-                                   "}";
+        final String jsonString =
+                "{\"body\" : "
+                 + "["
+                 + "{\"enable\" : false, \"title\" : \"sampletitle\", "
+                 +   " \"time\" : \"00:00\", \"path\" : \"\\/path\\/to\\/file\"},"
+                 + "{\"enable\" : true, \"title\" : \"sampletitle2\", "
+                 +   "\"time\" : \"01:00\", \"path\" : \"\\/path\\/to\\/file\\/2\"}"
+                 + "]"
+                 + "}";
 
         ArrayList<ConfigItem> itemList = null;
         try {
-            itemList = ConfigItem.JsonParser.getInstance().parse(jsonString);
+            itemList = (ArrayList<ConfigItem>) ConfigItem.JsonParser.getInstance().parse(jsonString);
         } catch (JSONException e) {
             fail();
         }
-        
+
+        assertEquals(false            , itemList.get(0).isEnable());
         assertEquals("sampletitle"    , itemList.get(0).getTitle());
         assertEquals("00:00"          , itemList.get(0).getTime());
         assertEquals("/path/to/file"  , itemList.get(0).getPath());
 
+        assertEquals(true             , itemList.get(1).isEnable());
         assertEquals("sampletitle2"   , itemList.get(1).getTitle());
         assertEquals("01:00"          , itemList.get(1).getTime());
         assertEquals("/path/to/file/2", itemList.get(1).getPath());
-    
     }
 
     /**
-     * 
-     * TODO:describe comment 
-     */
-    public void test_innerJsonGen_single() {
-        final String jsonString = "{\"time\":\"00:00\",\"title\":\"sampletitle\",\"path\":\"\\/path\\/to\\/file\"}";
-        ConfigItem item = new ConfigItem();
-        item.setTitle("sampletitle");
-        item.setTime("00:00");
-        item.setPath("/path/to/file");
-        try {
-             assertEquals(jsonString,ConfigItem.JsonGenerator.getInstance().genSingleJson(item));
-        } catch (JSONException e) {
-            fail();
-        }
-    }
-    
-    /**
-     * 
-     * TODO:describe comment 
+     * dummy comment.
+     * TODO:describe comment
      */
     public void test_innerJsonGen_multi() {
-        final String jsonString = "{\"body\":[" +
-                                  "{\"time\":\"00:00\",\"title\":\"sampletitle\",\"path\":\"\\/path\\/to\\/file\"}," +
-                                  "{\"time\":\"01:00\",\"title\":\"sampletitle2\",\"path\":\"\\/path\\/to\\/file\\/2\"}]";
-        
-        ConfigItem item = new ConfigItem();
-        item.setTitle("sampletitle");
-        item.setTime("00:00");
-        item.setPath("/path/to/file");
-        ConfigItem item2 = new ConfigItem();
-        item2.setTitle("sampletitle2");
-        item2.setTime("01:00");
-        item2.setPath("/path/to/file/2");
+        final String jsonString = "{\"body\":["
+                                   + "{\"enable\":false,\"time\":\"00:00\","
+                                   + "\"title\":\"sampletitle\",\"path\":\"\\/path\\/to\\/file\"},"
+                                   + "{\"enable\":true,\"time\":\"01:00\","
+                                   + "\"title\":\"sampletitle2\",\"path\":\"\\/path\\/to\\/file\\/2\"}]}";
+
         ArrayList<ConfigItem> list = new ArrayList<ConfigItem>();
-        list.add(item);
-        list.add(item2);
+        list.add(new ConfigItem(false, "sampletitle",  "00:00", "/path/to/file"));
+        list.add(new ConfigItem(true,  "sampletitle2", "01:00", "/path/to/file/2"));
         try {
-            Log.d("DEBUG_jsonString",jsonString);
-            Log.d("DEBUG_generatate",ConfigItem.JsonGenerator.getInstance().genJson(list));
-             assertEquals(jsonString,ConfigItem.JsonGenerator.getInstance().genJson(list));
+            assertEquals(jsonString, ConfigItem.JsonGenerator.getInstance().genJson(list));
         } catch (JSONException e) {
             fail();
         }
     }
 
+    /**
+     * dummy comment.
+     * TODO:describe comment
+     */
+    public void test_innerJsonGeneral() {
+        ArrayList<ConfigItem> list = new ArrayList<ConfigItem>();
+        list.add(new ConfigItem(false, "sampletitle",  "00:00", "/path/to/file"));
+        list.add(new ConfigItem(true,  "sampletitle2", "01:00", "/path/to/file/2"));
+       try {
+            String jsonString = ConfigItem.JsonGenerator.getInstance().genJson(list);
+            ArrayList<ConfigItem> list2 = (ArrayList<ConfigItem>) ConfigItem.JsonParser.getInstance().parse(jsonString);
+
+            assertEquals(false             , list2.get(0).isEnable());
+            assertEquals("sampletitle"     , list2.get(0).getTitle());
+            assertEquals("00:00"           , list2.get(0).getTime());
+            assertEquals("/path/to/file"   , list2.get(0).getPath());
+
+            assertEquals(true              , list2.get(1).isEnable());
+            assertEquals("sampletitle2"    , list2.get(1).getTitle());
+            assertEquals("01:00"           , list2.get(1).getTime());
+            assertEquals("/path/to/file/2" , list2.get(1).getPath());
+        } catch (JSONException e) {
+            e.printStackTrace();
+            fail();
+        }
+    }
 }
