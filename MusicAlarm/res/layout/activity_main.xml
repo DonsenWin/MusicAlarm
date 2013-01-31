@@ -46,11 +46,39 @@
             android:onClick="onClickStopAlarm"
             android:text="@string/alartStop" />
     </LinearLayout>
-    
+   <LinearLayout
+        android:id="@+id/serviceButtons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" 
+        android:layout_below="@+id/alarmButtons">
+
+        <Button
+            android:id="@+id/serviceStartButton"
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="onClickStartService"
+            android:text="@string/serviceStart" />
+
+        <Button
+            android:id="@+id/serviceEndButton"
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="onClickStopService"
+            android:text="@string/serviceStop" />
+        <Button
+            android:id="@+id/serviceCheckButton"
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="onClickCheckService"
+            android:text="@string/serviceCheck" />
+        </LinearLayout>    
     <ListView
         android:id="@+id/ConfigList"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/alarmButtons" />
+        android:layout_below="@+id/serviceButtons" />
 
 </RelativeLayout>

@@ -29,6 +29,7 @@
             android:name="jp.fedom.android.musicalarm.activity.MusicActivity"
             android:label="@string/title_activity_music" >
         </activity>
-    </application>
+        <service android:name="jp.fedom.android.musicalarm.service.AlarmService" />
+       </application>
 
 </manifest>

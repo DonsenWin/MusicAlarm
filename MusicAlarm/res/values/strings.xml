@@ -15,5 +15,8 @@
     <string name="alartStop">alarmStop</string>
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_music">MusicActivity</string>
+    <string name="serviceStart">service Start</string>
+    <string name="serviceStop">service Stop</string>
+    <string name="serviceCheck">service Check</string>
 
 </resources>
