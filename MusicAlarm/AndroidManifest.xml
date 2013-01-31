@@ -4,12 +4,16 @@
     android:versionCode="1"
     android:versionName="1.0" >
 
+    <permission android:name="jp.fedom.android.musicalarm.LOCAL" />
+
     <uses-sdk
         android:minSdkVersion="10"
         android:targetSdkVersion="17" />
 
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="jp.fedom.android.musicalarm.LOCAL" />
 
     <application
         android:name="jp.fedom.android.musicalarm.MusicAlarm"
@@ -22,6 +26,7 @@
             android:label="@string/title_activity_main" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -29,7 +34,19 @@
             android:name="jp.fedom.android.musicalarm.activity.MusicActivity"
             android:label="@string/title_activity_music" >
         </activity>
-        <service android:name="jp.fedom.android.musicalarm.service.AlarmService" />
-       </application>
+
+        <service
+            android:name="jp.fedom.android.musicalarm.service.AlarmService"
+            android:permission="jp.fedom.android.musicalarm.LOCAL" />
+
+        <receiver
+            android:name="jp.fedom.android.musicalarm.broadcastreceiver.BootLoaderBroadcastReceiver"
+            android:enabled="true"
+            android:permission="jp.fedom.android.musicalarm.LOCAL" >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+    </application>
 
 </manifest>
