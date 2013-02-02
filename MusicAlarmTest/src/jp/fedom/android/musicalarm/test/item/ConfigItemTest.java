@@ -1,6 +1,7 @@
 package jp.fedom.android.musicalarm.test.item;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import org.json.JSONException;
 
@@ -38,6 +39,59 @@ public final class ConfigItemTest extends TestCase {
         super.tearDown();
     }
 
+
+    /**
+     * dummy comment.
+     * TODO:describe comment
+     */
+    public void test_DateType_daily_sameday() {
+    	Calendar configSetTime = Calendar.getInstance();
+    	
+    	// set 10:00
+    	configSetTime.set(Calendar.HOUR, 10);
+    	configSetTime.set(Calendar.MINUTE, 00);
+    	
+    	// 2013-2-2 9:00(Sun) 
+    	Calendar now = Calendar.getInstance();
+    	now.set(2013,2 + 1,2,9,00);
+    	
+    	Calendar next = ConfigItem.DateType.daily.getNextDate(now,configSetTime);
+    	
+    	// 2013-2-2 10:00(Sun) 
+    	assertEquals(2013, next.get(Calendar.YEAR));
+    	assertEquals(2 + 1, next.get(Calendar.MONTH));
+    	assertEquals(2, next.get(Calendar.DATE));
+    	assertEquals(10, next.get(Calendar.HOUR));
+    	assertEquals(00, next.get(Calendar.MINUTE));
+    	
+    }
+
+    /**
+     * dummy comment.
+     * TODO:describe comment
+     */
+    public void test_DateType_daily_nextday() {
+    	Calendar configSetTime = Calendar.getInstance();
+    	
+    	// set 10:00
+    	configSetTime.set(Calendar.HOUR, 10);
+    	configSetTime.set(Calendar.MINUTE, 00);
+    	
+    	// 2013-2-2 11:00(Sun) 
+    	Calendar now = Calendar.getInstance();
+    	now.set(2013,2 + 1,2,11,00);
+    	
+    	Calendar next = ConfigItem.DateType.daily.getNextDate(now,configSetTime);
+    	
+    	// 2013-2-3 10:00(Sun) 
+    	assertEquals(2013, next.get(Calendar.YEAR));
+    	assertEquals(2 + 1, next.get(Calendar.MONTH));
+    	assertEquals(3, next.get(Calendar.DATE));
+    	assertEquals(10, next.get(Calendar.HOUR));
+    	assertEquals(00, next.get(Calendar.MINUTE));
+    	
+    }
+    
     /**
      * dummy comment.
      * TODO:describe comment

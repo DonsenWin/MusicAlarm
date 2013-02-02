@@ -55,8 +55,6 @@ public final class MainActivity extends Activity {
     /** dummy comment. TODO:update comment */
     private static final String SPEAKER_MAC_AD = "30:F9:ED:8F:35:B0";
 
-    /** dummy comment. TODO:update comment */
-    private static final int INTERVAL = 60 * 60 * 6;
 
     /**
      * dummy comment.
@@ -231,17 +229,7 @@ public final class MainActivity extends Activity {
      */
    public void onClickStartAlarm(final View v) {
         Log.d("onClick", "called onClickStartAlarm");
-        Intent intent = new Intent(this, MusicActivity.class); // ReceivedActivityを呼び出すインテントを作成
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        PendingIntent sender = PendingIntent.getActivity(this, 0, intent, 0); // ブロードキャストを投げるPendingIntentの作成
-
-        Calendar calendar = Calendar.getInstance(); // Calendar取得
-        calendar.setTimeInMillis(System.currentTimeMillis()); // 現在時刻を取得
-        calendar.add(Calendar.SECOND, INTERVAL); // 現時刻よりINTERVAL秒後を設定
-
-        AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE); // AlramManager取得
-        am.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), sender); // AlramManagerにPendingIntentを登録
-    }
+   }
 
     /**
      * This is dummy comment.

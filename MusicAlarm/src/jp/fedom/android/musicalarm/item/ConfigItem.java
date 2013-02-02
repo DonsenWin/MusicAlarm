@@ -1,7 +1,9 @@
 package jp.fedom.android.musicalarm.item;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.TimeZone;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -15,6 +17,58 @@ import org.json.JSONStringer;
  */
 public class ConfigItem {
 
+	
+	public enum DateType{
+		daily,
+		weekDay,
+		dayOff,
+		onceOnly;		
+		
+		private TimeZone tz = TimeZone.getTimeZone("Asia/Tokyo");
+		
+		public String toString(){
+			return this.name();
+		}
+		
+		/**
+		 * please call with Calendar.getInstance(tz).
+		 * @param now
+		 * @return
+		 */
+		public Calendar getNextDate(Calendar now,Calendar nextConfig) {
+			Calendar next = (Calendar)now.clone();
+			if(nextConfig.get(Calendar.HOUR) * 60 +nextConfig.get(Calendar.MINUTE) 
+			   < now.get(Calendar.HOUR) * 60 +now.get(Calendar.MINUTE)){
+				next.add(Calendar.DATE, 1);
+			}
+			next.set(Calendar.HOUR, nextConfig.get(Calendar.HOUR));
+			next.set(Calendar.MINUTE, nextConfig.get(Calendar.MINUTE));
+			switch (this) {
+			case daily:
+			case onceOnly:
+				return next;
+			case weekDay:
+				// TODO: implement this is wrong. if time is already over 
+				if (now.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY) {
+					now.add(Calendar.DATE, 2);
+				} else if (now.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
+					now.add(Calendar.DATE, 1);
+				} else {
+					// do nothing
+				}
+				return now;
+			case dayOff:
+				// TODO: implement
+				return now;
+			default:
+				// TODO: implement
+				return now;
+			}
+
+		}
+		
+	}
+	
     /** dummy comment. TODO:update comment */
     private boolean enable;
     /** dummy comment. TODO:update comment */
@@ -23,6 +77,8 @@ public class ConfigItem {
     private String time;
     /** dummy comment. TODO:update comment */
     private String path;
+    /** dummy comment. TODO:update comment */
+    private DateType dateType;
 
     /**
      * dummy comment.

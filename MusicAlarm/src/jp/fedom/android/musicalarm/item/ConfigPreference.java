@@ -22,15 +22,18 @@ public class ConfigPreference {
     private static final String PREFERENCE_KEY = "musicalarm_config";
 
     /** dummy comment. TODO:update comment */
-    private static final int ITEM_NUM = 8;
+    private static final int ITEM_NUM = 1;
 
+    /** dummy comment. TODO:update comment */
+    private static final int ZERO = 0;
+    
     /** dummy comment. TODO:update comment */
     private static final String TAG = "ConfigPreference";
 
     /**
      * dummy comment.
      * TODO:update comment
-     * @param argPreference prefeence
+     * @param argPreference preference
      */
     public ConfigPreference(final SharedPreferences argPreference) {
         this.preference = argPreference;
@@ -41,7 +44,7 @@ public class ConfigPreference {
      * TODO:update comment
      * @return list if under ITEM_NUM, padding inialized item.
      */
-    public final List<ConfigItem> loadConfigItems() {
+	public final List<ConfigItem> loadConfigItems() {
         ArrayList<ConfigItem> items;
         final String jsonData = preference.getString(PREFERENCE_KEY, "");
 
@@ -54,18 +57,25 @@ public class ConfigPreference {
                 items = new ArrayList<ConfigItem>();
             }
         }
-        final int appendItemCount = ITEM_NUM - items.size();
-        for (int i = 0; i < appendItemCount; i++) {
-            items.add(new ConfigItem());
-        }
+        final int itemCountDelta = ITEM_NUM - items.size();
+        if(itemCountDelta > ZERO){
+			for (int i = 0; i < itemCountDelta; i++) {
+				items.add(new ConfigItem());
+			}
+		} else if (itemCountDelta < ZERO) {
+			for (int i = itemCountDelta; i < 0; i++) {
+				items.remove(ITEM_NUM + itemCountDelta);
+			}
+		}
         return items;
     }
 
-    /**
-     * dummy comment.
-     * TODO:update comment
-     * @param items items
-     */
+	/**
+	 * dummy comment. TODO:update comment
+	 * 
+	 * @param items
+	 *            items
+	 */
     public final void saveConfigItems(final List<ConfigItem> items) {
         if (items != null) {
             Editor editor = preference.edit();
