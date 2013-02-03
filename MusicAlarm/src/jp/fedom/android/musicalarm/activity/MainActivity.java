@@ -1,12 +1,12 @@
 package jp.fedom.android.musicalarm.activity;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 
 import jp.fedom.android.musicalarm.R;
 import jp.fedom.android.musicalarm.item.ConfigItem;
 import jp.fedom.android.musicalarm.item.ConfigPreference;
-import jp.fedom.android.musicalarm.service.AlarmService;
+import jp.fedom.android.musicalarm.service.AlarmRegisterService;
+import jp.fedom.android.musicalarm.service.AlarmRingService;
 import jp.fedom.android.musicalarm.util.bluetooth.BluetoothA2DPWrapper;
 import jp.fedom.android.musicalarm.util.music.MusicWapper;
 
@@ -16,8 +16,6 @@ import android.preference.PreferenceManager;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.ActivityManager.RunningServiceInfo;
-import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -238,8 +236,8 @@ public final class MainActivity extends Activity {
      */
     public void onClickStopAlarm(final View v) {
         Log.d("onClick", "called onClickStopAlarm");
-        Intent intent = new Intent(this, MusicActivity.class);
-        startActivity(intent);
+        Intent intent = new Intent(this, AlarmRingService.class);
+        startService(intent);
     }
     
     
@@ -251,7 +249,7 @@ public final class MainActivity extends Activity {
     public void onClickStartService(final View v){
     	Log.d("click","called onClickStartService");
     	try{
-    	ComponentName name = startService( new Intent(MainActivity.this, AlarmService.class));
+    	ComponentName name = startService( new Intent(MainActivity.this, AlarmRegisterService.class));
     	if(name != null){
     		(Toast.makeText(this, name.getClassName(), Toast.LENGTH_SHORT)).show();
     	}else{
@@ -270,14 +268,14 @@ public final class MainActivity extends Activity {
      */
     public void onClickStopService(final View v){
     	Log.d("click","called onClickStopService");
-    	Intent intent = new Intent(MainActivity.this, AlarmService.class);
+    	Intent intent = new Intent(MainActivity.this, AlarmRegisterService.class);
     	stopService(intent);
     }
     
     private boolean isAlarmServiceRunning() {
         ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
         for (RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
-            if (AlarmService.class.getName().equals(service.service.getClassName())) {
+            if (AlarmRegisterService.class.getName().equals(service.service.getClassName())) {
                 return true;
             }
         }
@@ -292,9 +290,7 @@ public final class MainActivity extends Activity {
     public void onClickCheckService(final View v){
     	Log.d("click","called onClickCheckService");
     	String str = isAlarmServiceRunning() ? "service is running" : "service is NOT running";
-    	
     	(Toast.makeText(this, str, Toast.LENGTH_SHORT)).show();
-
     }
 
 }

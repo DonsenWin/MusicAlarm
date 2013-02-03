@@ -1,14 +1,14 @@
 package jp.fedom.android.musicalarm.test.service;
 
-import jp.fedom.android.musicalarm.service.AlarmService;
+import jp.fedom.android.musicalarm.service.AlarmRegisterService;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.test.ServiceTestCase;
 import android.test.mock.MockApplication;
 
-public class AlarmServiceTest extends ServiceTestCase {
+public class AlarmRegisterServiceTest extends ServiceTestCase {
 
-	public AlarmServiceTest(Class serviceClass) {
+	public AlarmRegisterServiceTest(Class serviceClass) {
 		super(serviceClass);
 	}
 	
@@ -22,7 +22,7 @@ public class AlarmServiceTest extends ServiceTestCase {
 	 */
 	public void test_sample(){
 		MockApplication app = new MockApplication();
-		Intent intent = new Intent(app,AlarmService.class);
+		Intent intent = new Intent(app,AlarmRegisterService.class);
 		startService(intent);
 	}
 

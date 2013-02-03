@@ -3,7 +3,6 @@ package jp.fedom.android.musicalarm.service;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-import jp.fedom.android.musicalarm.activity.MusicActivity;
 import jp.fedom.android.musicalarm.item.ConfigItem;
 import jp.fedom.android.musicalarm.item.ConfigPreference;
 import android.app.AlarmManager;
@@ -15,11 +14,11 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Toast;
 
-public class AlarmService extends Service {
+public class AlarmRegisterService extends Service {
     /** dummy comment. TODO:update comment */
     private static final int INTERVAL = 10;
 
-	public AlarmService() {
+	public AlarmRegisterService() {
 		super();
 	}
 
@@ -34,16 +33,16 @@ public class AlarmService extends Service {
         ArrayList<ConfigItem> dataList = (ArrayList<ConfigItem>) pref.loadConfigItems();     
         (Toast.makeText(this,dataList.get(0).getTitle() , Toast.LENGTH_LONG)).show();
         
-        Intent startIntent = new Intent(this, MusicActivity.class); // ReceivedActivity‚ğŒÄ‚Ño‚·ƒCƒ“ƒeƒ“ƒg‚ğì¬
+        Intent startIntent = new Intent(this, AlarmRingService.class); // ReceivedActivityï¿½ï¿½ï¿½Ä‚Ñoï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½eï¿½ï¿½ï¿½gï¿½ï¿½ï¿½ì¬
         startIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        PendingIntent sender = PendingIntent.getActivity(this, 0, startIntent, 0); // ƒuƒ[ƒhƒLƒƒƒXƒg‚ğ“Š‚°‚éPendingIntent‚Ìì¬
+        PendingIntent sender = PendingIntent.getService(this, 0, startIntent, 0); // ï¿½uï¿½ï¿½ï¿½[ï¿½hï¿½Lï¿½ï¿½ï¿½Xï¿½gï¿½ğ“Š‚ï¿½ï¿½ï¿½PendingIntentï¿½Ìì¬
 
-        Calendar calendar = Calendar.getInstance(); // Calendaræ“¾
-        calendar.setTimeInMillis(System.currentTimeMillis()); // Œ»İ‚ğæ“¾
-        calendar.add(Calendar.SECOND, INTERVAL); // Œ»‚æ‚èINTERVAL•bŒã‚ğİ’è
+        Calendar calendar = Calendar.getInstance(); // Calendarï¿½æ“¾
+        calendar.setTimeInMillis(System.currentTimeMillis()); // ï¿½ï¿½ï¿½İï¿½ï¿½ï¿½ï¿½ï¿½ï¿½æ“¾
+        calendar.add(Calendar.SECOND, INTERVAL); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½INTERVALï¿½bï¿½ï¿½ï¿½İ’ï¿½
 
-        AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE); // AlramManageræ“¾
-        am.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), sender); // AlramManager‚ÉPendingIntent‚ğ“o˜^	
+        AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE); // AlramManagerï¿½æ“¾
+        am.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), sender); // AlramManagerï¿½ï¿½PendingIntentï¿½ï¿½oï¿½^	
 	}
 	
 	@Override

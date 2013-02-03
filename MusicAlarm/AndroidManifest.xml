@@ -30,15 +30,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name="jp.fedom.android.musicalarm.activity.MusicActivity"
-            android:label="@string/title_activity_music" >
-        </activity>
 
         <service
-            android:name="jp.fedom.android.musicalarm.service.AlarmService"
+            android:name="jp.fedom.android.musicalarm.service.AlarmRegisterService"
             android:permission="jp.fedom.android.musicalarm.LOCAL" />
-
+        <service
+            android:name="jp.fedom.android.musicalarm.service.AlarmRingService"
+            android:permission="jp.fedom.android.musicalarm.LOCAL" />
+        
         <receiver
             android:name="jp.fedom.android.musicalarm.broadcastreceiver.BootLoaderBroadcastReceiver"
             android:enabled="true"
