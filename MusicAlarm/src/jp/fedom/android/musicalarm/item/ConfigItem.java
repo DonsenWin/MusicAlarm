@@ -10,6 +10,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONStringer;
 
+import android.util.Log;
+
 /**
  * dummy comment.
  * TODO:update comment
@@ -35,36 +37,52 @@ public class ConfigItem {
 		 * @param now
 		 * @return
 		 */
-		public Calendar getNextDate(Calendar now,Calendar nextConfig) {
+		public Calendar getNextDate(Calendar now,String config) {
 			Calendar next = (Calendar)now.clone();
-			if(nextConfig.get(Calendar.HOUR) * 60 +nextConfig.get(Calendar.MINUTE) 
-			   < now.get(Calendar.HOUR) * 60 +now.get(Calendar.MINUTE)){
-				next.add(Calendar.DATE, 1);
+			
+			next.set(Calendar.HOUR, Integer.parseInt(config.split(":")[0]));
+			next.set(Calendar.HOUR_OF_DAY, Integer.parseInt(config.split(":")[0]));
+			next.set(Calendar.MINUTE, Integer.parseInt(config.split(":")[1]));
+			
+			//　今日の設定時刻を過ぎていたら、次の日以降から 
+			if(now.after(next)){
+			   next.add(Calendar.DATE, 1);
 			}
-			next.set(Calendar.HOUR, nextConfig.get(Calendar.HOUR));
-			next.set(Calendar.MINUTE, nextConfig.get(Calendar.MINUTE));
+						
 			switch (this) {
 			case daily:
 			case onceOnly:
-				return next;
+				// nothing todo
+				break;
 			case weekDay:
-				// TODO: implement this is wrong. if time is already over 
-				if (now.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY) {
-					now.add(Calendar.DATE, 2);
-				} else if (now.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
-					now.add(Calendar.DATE, 1);
-				} else {
-					// do nothing
+				while(!isWeekDay(next)){
+					next.add(Calendar.DATE, 1);
 				}
-				return now;
+				break;
 			case dayOff:
-				// TODO: implement
-				return now;
-			default:
-				// TODO: implement
-				return now;
+				while(isWeekDay(next)){
+					next.add(Calendar.DATE, 1);
+				}
+				break;
 			}
-
+			return next;
+		}
+		
+		private boolean isWeekDay(Calendar targetDay){
+			if (targetDay == null){
+				return false;
+			}
+			
+			if(targetDay.get(Calendar.DAY_OF_WEEK) == Calendar.MONDAY ||
+			   targetDay.get(Calendar.DAY_OF_WEEK) == Calendar.TUESDAY ||
+			   targetDay.get(Calendar.DAY_OF_WEEK) == Calendar.WEDNESDAY ||
+			   targetDay.get(Calendar.DAY_OF_WEEK) == Calendar.THURSDAY ||
+			   targetDay.get(Calendar.DAY_OF_WEEK) == Calendar.FRIDAY) {
+			    return true;		
+			}else{
+				return false;
+			}
+				
 		}
 		
 	}

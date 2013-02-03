@@ -1,5 +1,6 @@
 package jp.fedom.android.musicalarm.test.item;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -44,52 +45,162 @@ public final class ConfigItemTest extends TestCase {
      * dummy comment.
      * TODO:describe comment
      */
-    public void test_DateType_daily_sameday() {
-    	Calendar configSetTime = Calendar.getInstance();
-    	
-    	// set 10:00
-    	configSetTime.set(Calendar.HOUR, 10);
-    	configSetTime.set(Calendar.MINUTE, 00);
-    	
-    	// 2013-2-2 9:00(Sun) 
-    	Calendar now = Calendar.getInstance();
-    	now.set(2013,2 + 1,2,9,00);
-    	
-    	Calendar next = ConfigItem.DateType.daily.getNextDate(now,configSetTime);
-    	
-    	// 2013-2-2 10:00(Sun) 
-    	assertEquals(2013, next.get(Calendar.YEAR));
-    	assertEquals(2 + 1, next.get(Calendar.MONTH));
-    	assertEquals(2, next.get(Calendar.DATE));
-    	assertEquals(10, next.get(Calendar.HOUR));
-    	assertEquals(00, next.get(Calendar.MINUTE));
-    	
+    public void test_DateType_daily_beforetime() {
+        // set 10:00
+        String configSetTime = "10:00";       
+        
+        // now = 2013-2-2 9:00(Sat) 
+        Calendar now = Calendar.getInstance();
+        now.set(2013,Calendar.FEBRUARY,2,9,00);
+        
+        Calendar next = ConfigItem.DateType.daily.getNextDate(now,configSetTime);
+        
+        // 2013-2-2 10:00(Sat) 
+        assertEquals(Calendar.SATURDAY, next.get(Calendar.DAY_OF_WEEK));
+        assertEquals(2013, next.get(Calendar.YEAR));
+        assertEquals(Calendar.FEBRUARY, next.get(Calendar.MONTH));
+        assertEquals(2, next.get(Calendar.DATE));
+        assertEquals(10, next.get(Calendar.HOUR));
+        assertEquals(00, next.get(Calendar.MINUTE));
     }
 
     /**
      * dummy comment.
      * TODO:describe comment
      */
-    public void test_DateType_daily_nextday() {
-    	Calendar configSetTime = Calendar.getInstance();
-    	
-    	// set 10:00
-    	configSetTime.set(Calendar.HOUR, 10);
-    	configSetTime.set(Calendar.MINUTE, 00);
-    	
-    	// 2013-2-2 11:00(Sun) 
-    	Calendar now = Calendar.getInstance();
-    	now.set(2013,2 + 1,2,11,00);
-    	
-    	Calendar next = ConfigItem.DateType.daily.getNextDate(now,configSetTime);
-    	
-    	// 2013-2-3 10:00(Sun) 
-    	assertEquals(2013, next.get(Calendar.YEAR));
-    	assertEquals(2 + 1, next.get(Calendar.MONTH));
-    	assertEquals(3, next.get(Calendar.DATE));
-    	assertEquals(10, next.get(Calendar.HOUR));
-    	assertEquals(00, next.get(Calendar.MINUTE));
-    	
+    public void test_DateType_daily_overtime() {
+        // set 10:00
+        String configSetTime = "10:00";       
+                
+        // 2013-2-2 11:00(Sat) 
+        Calendar now = Calendar.getInstance();
+        now.set(2013,Calendar.FEBRUARY,2,11,00);
+        
+        Calendar next = ConfigItem.DateType.daily.getNextDate(now,configSetTime);
+        
+        // 2013-2-3 10:00(Sun) 
+        assertEquals(Calendar.SUNDAY, next.get(Calendar.DAY_OF_WEEK));
+        assertEquals(2013, next.get(Calendar.YEAR));
+        assertEquals(Calendar.FEBRUARY, next.get(Calendar.MONTH));
+        assertEquals(3, next.get(Calendar.DATE));
+        assertEquals(10, next.get(Calendar.HOUR));
+        assertEquals(00, next.get(Calendar.MINUTE));
+        
+    }
+
+    /**
+     * dummy comment.
+     * TODO:describe comment
+     */
+    public void test_DateType_weekday_Sat_beforetime() {                
+        // now : 2013-2-2 9:00(Sat) 
+        Calendar now = Calendar.getInstance();
+        now.set(2013,Calendar.FEBRUARY, 2,9,00);
+        // set 10:00
+        String configSetTime = "10:00";       
+        
+        Calendar next = ConfigItem.DateType.weekDay.getNextDate(now,configSetTime);
+        
+        // 2013-2-4 10:00(mon) 
+        assertEquals(Calendar.MONDAY, next.get(Calendar.DAY_OF_WEEK));
+        assertEquals(2013, next.get(Calendar.YEAR));
+        assertEquals(Calendar.FEBRUARY, next.get(Calendar.MONTH));
+        assertEquals(4, next.get(Calendar.DATE));
+        assertEquals(10, next.get(Calendar.HOUR));
+        assertEquals(00, next.get(Calendar.MINUTE));
+        
+    }
+
+    /**
+     * dummy comment.
+     * TODO:describe comment
+     */
+    public void test_DateType_weekday_Sat_overtime() {                
+        // now : 2013-2-2 11:00(Sat) 
+        Calendar now = Calendar.getInstance();
+        now.set(2013,Calendar.FEBRUARY, 2,11,00);
+        // set 10:00
+        String configSetTime = "10:00";       
+        
+        Calendar next = ConfigItem.DateType.weekDay.getNextDate(now,configSetTime);
+        
+        // 2013-2-4 10:00(mon) 
+        assertEquals(Calendar.MONDAY, next.get(Calendar.DAY_OF_WEEK));
+        assertEquals(2013, next.get(Calendar.YEAR));
+        assertEquals(Calendar.FEBRUARY, next.get(Calendar.MONTH));
+        assertEquals(4, next.get(Calendar.DATE));
+        assertEquals(10, next.get(Calendar.HOUR));
+        assertEquals(00, next.get(Calendar.MINUTE));
+        
+    }
+
+    /**
+     * dummy comment.
+     * TODO:describe comment
+     */
+    public void test_DateType_dayoff_Sat_beforetime() {
+        // now : 2013-2-2 9:00(Sat) 
+        Calendar now = Calendar.getInstance();
+        now.set(2013,Calendar.FEBRUARY, 2,9,00);
+
+        // set 10:00
+        String configSetTime = "10:00";       
+        
+        Calendar next = ConfigItem.DateType.dayOff.getNextDate(now,configSetTime);
+        
+        // 2013-2-2 10:00(Sat) 
+        assertEquals(Calendar.SATURDAY, next.get(Calendar.DAY_OF_WEEK));
+        assertEquals(2013, next.get(Calendar.YEAR));
+        assertEquals(Calendar.FEBRUARY, next.get(Calendar.MONTH));
+        assertEquals(2, next.get(Calendar.DATE));
+        assertEquals(10, next.get(Calendar.HOUR));
+        assertEquals(00, next.get(Calendar.MINUTE));
+    }
+    
+    /**
+     * dummy comment.
+     * TODO:describe comment
+     */
+    public void test_DateType_dayoff_Sat_overtime() {
+        // now : 2013-2-2 11:00(Sat) 
+        Calendar now = Calendar.getInstance();
+        now.set(2013,Calendar.FEBRUARY, 2,11,00);
+
+        // set 10:00
+        String configSetTime = "10:00";       
+        
+        Calendar next = ConfigItem.DateType.dayOff.getNextDate(now,configSetTime);
+        
+        // 2013-2-3 10:00(Sun) 
+        assertEquals(Calendar.SUNDAY, next.get(Calendar.DAY_OF_WEEK));
+        assertEquals(2013, next.get(Calendar.YEAR));
+        assertEquals(Calendar.FEBRUARY, next.get(Calendar.MONTH));
+        assertEquals(3, next.get(Calendar.DATE));
+        assertEquals(10, next.get(Calendar.HOUR));
+        assertEquals(00, next.get(Calendar.MINUTE));
+    }
+    
+    /**
+     * dummy comment.
+     * TODO:describe comment
+     */
+    public void test_DateType_dayoff_Mon_beforetime() {
+        // now : 2013-2-4 9:00(Mon) 
+        Calendar now = Calendar.getInstance();
+        now.set(2013,Calendar.FEBRUARY, 4,9,00);
+
+        // set 10:00
+        String configSetTime = "10:00";       
+        
+        Calendar next = ConfigItem.DateType.dayOff.getNextDate(now,configSetTime);
+        
+        // 2013-2-9 10:00(Sat) 
+        assertEquals(Calendar.SATURDAY, next.get(Calendar.DAY_OF_WEEK));
+        assertEquals(2013, next.get(Calendar.YEAR));
+        assertEquals(Calendar.FEBRUARY, next.get(Calendar.MONTH));
+        assertEquals(9, next.get(Calendar.DATE));
+        assertEquals(10, next.get(Calendar.HOUR));
+        assertEquals(00, next.get(Calendar.MINUTE));
     }
     
     /**
