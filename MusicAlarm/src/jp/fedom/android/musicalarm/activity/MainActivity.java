@@ -27,7 +27,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -57,29 +56,29 @@ public final class MainActivity extends Activity {
     /** dummy comment. TODO:update comment */
     private static final String SPEAKER_MAC_AD = "30:F9:ED:8F:35:B0";
 
+    /** the callback received when the user "sets" the time in the dialog.*/
+    private TimePickerListenerWrapper mTimeSetListener = new TimePickerListenerWrapper();
     
     private class TimePickerListenerWrapper implements TimePickerDialog.OnTimeSetListener{
 
-    	private int itemPosition = -1;
-    	
-    	public void setItemPosition(final int itemPosition_arg){
-    		this.itemPosition = itemPosition_arg;
-    	}
-			@Override
-			public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-	            Log.d("timepicker","onTimeset called");
-	            if (itemPosition != -1){
-	              dataList.get(itemPosition).setTime(String.format("%02d", hourOfDay) + ":" + String.format("%02d", minute));
-	  	          Log.d("timepicker","time set to " + itemPosition + "," + String.format("%02d", hourOfDay) + ":" + String.format("%02d", minute)) ;
-	              itemPosition = -1;
-	              adapter.notifyDataSetChanged();
-	            }
-	            
-			}
-    	
+        private int itemPosition = -1;
+        
+        public void setItemPosition(final int itemPosition_arg){
+            this.itemPosition = itemPosition_arg;
+        }
+            @Override
+            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                Log.d("timepicker","onTimeset called");
+                if (itemPosition != -1){
+                  dataList.get(itemPosition).setTime(String.format("%02d", hourOfDay) + ":" + String.format("%02d", minute));
+                    Log.d("timepicker","time set to " + itemPosition + "," + String.format("%02d", hourOfDay) + ":" + String.format("%02d", minute)) ;
+                  itemPosition = -1;
+                  adapter.notifyDataSetChanged();
+                }
+                
+            }
+        
     }
-    // the callback received when the user "sets" the time in the dialog
-    private TimePickerListenerWrapper mTimeSetListener = new TimePickerListenerWrapper();
    
     /**
      * dummy comment.
@@ -112,12 +111,9 @@ public final class MainActivity extends Activity {
             }
             final ConfigItem citem = (ConfigItem) getItem(position);
             if (citem != null) {
-                ((TextView) view.findViewById(R.id.config_title_text))
-                        .setText(citem.getTitle());
-                ((TextView) view.findViewById(R.id.config_time_text))
-                        .setText(citem.getTime());
-                ((TextView) view.findViewById(R.id.config_music_text))
-                        .setText(citem.getPath());
+                ((TextView) view.findViewById(R.id.config_title_text)).setText(citem.getTitle());
+                ((TextView) view.findViewById(R.id.config_time_text)).setText(citem.getTime());
+                ((TextView) view.findViewById(R.id.config_music_text)).setText(citem.getPath());
                 ((ToggleButton) view.findViewById(R.id.config_enable_toggle)).setChecked(citem.isEnable());
                 
                 view.findViewById(R.id.config_music_text).setOnClickListener(new OnClickListener() {
@@ -130,14 +126,14 @@ public final class MainActivity extends Activity {
                     @Override
                     public void onClick(final View view) {
                         Log.i("Click", "config_time_text  index : " + dataList.indexOf(view));
-                    	mTimeSetListener.setItemPosition(listview.getPositionForView(view));
-                    	
-                    	int hour = Integer.valueOf(dataList.get(listview.getPositionForView(view)).getTime().split(":")[0]);
-                    	int minute = Integer.valueOf(dataList.get(listview.getPositionForView(view)).getTime().split(":")[1]);
-                    	
-                    	TimePickerDialog tpDialog = new TimePickerDialog(MainActivity.this, mTimeSetListener, hour, minute, true);
-                    	tpDialog.show();
-                    	listview.invalidate();
+                        mTimeSetListener.setItemPosition(listview.getPositionForView(view));
+                        
+                        int hour = Integer.valueOf(dataList.get(listview.getPositionForView(view)).getTime().split(":")[0]);
+                        int minute = Integer.valueOf(dataList.get(listview.getPositionForView(view)).getTime().split(":")[1]);
+                        
+                        TimePickerDialog tpDialog = new TimePickerDialog(MainActivity.this, mTimeSetListener, hour, minute, true);
+                        tpDialog.show();
+                        listview.invalidate();
                     }
                 });
                 view.findViewById(R.id.config_title_text).setOnClickListener(new OnClickListener() {
@@ -149,9 +145,7 @@ public final class MainActivity extends Activity {
             }
             return view;
         }
-
     }
-
 
     @Override
     /**
@@ -161,6 +155,7 @@ public final class MainActivity extends Activity {
     public void onCreate(final Bundle savedState /* =savedInstanceState */) {
         super.onCreate(savedState);
         Log.i("onCreate", "onCreate");
+            
 
         setContentView(R.layout.activity_main);
         listview = (ListView) findViewById(R.id.ConfigList);
@@ -174,13 +169,13 @@ public final class MainActivity extends Activity {
     }
     
     public void saveConfig(){
-    	Log.d("menu","called save");
+        Log.d("menu","called save");
         final ConfigPreference pref = new ConfigPreference(PreferenceManager.getDefaultSharedPreferences(this));
         for(int i = 0; i < dataList.size(); i++){
-        	dataList.get(i).setEnable(   ((ToggleButton)listview.getChildAt(i).findViewById(R.id.config_enable_toggle)).isChecked() );
+            dataList.get(i).setEnable(   ((ToggleButton)listview.getChildAt(i).findViewById(R.id.config_enable_toggle)).isChecked() );
         }
         pref.saveConfigItems(dataList);
-		(Toast.makeText(this, "Saved", Toast.LENGTH_LONG)).show();
+        (Toast.makeText(this, "Saved", Toast.LENGTH_LONG)).show();
     }
 
     
@@ -199,7 +194,7 @@ public final class MainActivity extends Activity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
         case R.id.menu_save:
-        	saveConfig();
+            saveConfig();
             return true;
         default:
             return super.onOptionsItemSelected(item);
@@ -253,17 +248,17 @@ public final class MainActivity extends Activity {
      * @param v view
      */
     public void onClickStartService(final View v){
-    	Log.d("click","called onClickStartService");
-    	try{
-    	ComponentName name = startService( new Intent(MainActivity.this, AlarmRegisterService.class));
-    	if(name != null){
-    		(Toast.makeText(this, name.getClassName(), Toast.LENGTH_SHORT)).show();
-    	}else{
-    		(Toast.makeText(this, "name is null", Toast.LENGTH_SHORT)).show();
-    	}
-    	}catch(Exception e){
-    		Log.d("click",e.getMessage());
-    	}
+        Log.d("click","called onClickStartService");
+        try{
+        ComponentName name = startService( new Intent(MainActivity.this, AlarmRegisterService.class));
+        if(name != null){
+            (Toast.makeText(this, name.getClassName(), Toast.LENGTH_SHORT)).show();
+        }else{
+            (Toast.makeText(this, "name is null", Toast.LENGTH_SHORT)).show();
+        }
+        }catch(Exception e){
+            Log.d("click",e.getMessage());
+        }
     }
 
 
@@ -273,9 +268,9 @@ public final class MainActivity extends Activity {
      * @param v view
      */
     public void onClickStopService(final View v){
-    	Log.d("click","called onClickStopService");
-    	Intent intent = new Intent(MainActivity.this, AlarmRegisterService.class);
-    	stopService(intent);
+        Log.d("click","called onClickStopService");
+        Intent intent = new Intent(MainActivity.this, AlarmRegisterService.class);
+        stopService(intent);
     }
     
     private boolean isAlarmServiceRunning() {
@@ -294,9 +289,9 @@ public final class MainActivity extends Activity {
      * @param v view
      */
     public void onClickCheckService(final View v){
-    	Log.d("click","called onClickCheckService");
-    	String str = isAlarmServiceRunning() ? "service is running" : "service is NOT running";
-    	(Toast.makeText(this, str, Toast.LENGTH_SHORT)).show();
+        Log.d("click","called onClickCheckService");
+        String str = isAlarmServiceRunning() ? "service is running" : "service is NOT running";
+        (Toast.makeText(this, str, Toast.LENGTH_SHORT)).show();
     }
 
 }

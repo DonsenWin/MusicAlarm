@@ -15,15 +15,15 @@ public class AlarmRingService extends Service {
     private static final String SPEAKER_MAC_AD = "30:F9:ED:8F:35:B0";
 
     @Override
-	public IBinder onBind(Intent arg0) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    public IBinder onBind(Intent arg0) {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
     @Override
-	public final void onCreate() {
+    public final void onCreate() {
         super.onCreate();
-		(Toast.makeText(this, "AlarmRingService Start", Toast.LENGTH_LONG)).show();
+        (Toast.makeText(this, "AlarmRingService Start", Toast.LENGTH_LONG)).show();
 
         BluetoothA2DPWrapper.getInstance().connect(SPEAKER_MAC_AD);
         MusicWapper.getInstance().start((AudioManager) getSystemService(Context.AUDIO_SERVICE));
