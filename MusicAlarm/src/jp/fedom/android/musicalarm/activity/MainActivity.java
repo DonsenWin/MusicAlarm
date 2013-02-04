@@ -16,12 +16,14 @@ import android.preference.PreferenceManager;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.ActivityManager.RunningServiceInfo;
+import android.app.TimePickerDialog;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -29,7 +31,9 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 /**
  * This is dummy comment.
@@ -53,7 +57,30 @@ public final class MainActivity extends Activity {
     /** dummy comment. TODO:update comment */
     private static final String SPEAKER_MAC_AD = "30:F9:ED:8F:35:B0";
 
+    
+    private class TimePickerListenerWrapper implements TimePickerDialog.OnTimeSetListener{
 
+    	private int itemPosition = -1;
+    	
+    	public void setItemPosition(final int itemPosition_arg){
+    		this.itemPosition = itemPosition_arg;
+    	}
+			@Override
+			public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+	            Log.d("timepicker","onTimeset called");
+	            if (itemPosition != -1){
+	              dataList.get(itemPosition).setTime(String.format("%02d", hourOfDay) + ":" + String.format("%02d", minute));
+	  	          Log.d("timepicker","time set to " + itemPosition + "," + String.format("%02d", hourOfDay) + ":" + String.format("%02d", minute)) ;
+	              itemPosition = -1;
+	              adapter.notifyDataSetChanged();
+	            }
+	            
+			}
+    	
+    }
+    // the callback received when the user "sets" the time in the dialog
+    private TimePickerListenerWrapper mTimeSetListener = new TimePickerListenerWrapper();
+   
     /**
      * dummy comment.
      * TODO:update comment
@@ -67,7 +94,7 @@ public final class MainActivity extends Activity {
         }
 
         @Override
-        public Object getItem(final int index) {
+        public ConfigItem getItem(final int index) {
             return dataList.get(index);
         }
 
@@ -91,6 +118,8 @@ public final class MainActivity extends Activity {
                         .setText(citem.getTime());
                 ((TextView) view.findViewById(R.id.config_music_text))
                         .setText(citem.getPath());
+                ((ToggleButton) view.findViewById(R.id.config_enable_toggle)).setChecked(citem.isEnable());
+                
                 view.findViewById(R.id.config_music_text).setOnClickListener(new OnClickListener() {
                     @Override
                     public void onClick(final View view) {
@@ -100,7 +129,15 @@ public final class MainActivity extends Activity {
                 view.findViewById(R.id.config_time_text).setOnClickListener(new OnClickListener() {
                     @Override
                     public void onClick(final View view) {
-                        Log.i("Click", "config_time_text");
+                        Log.i("Click", "config_time_text  index : " + dataList.indexOf(view));
+                    	mTimeSetListener.setItemPosition(listview.getPositionForView(view));
+                    	
+                    	int hour = Integer.valueOf(dataList.get(listview.getPositionForView(view)).getTime().split(":")[0]);
+                    	int minute = Integer.valueOf(dataList.get(listview.getPositionForView(view)).getTime().split(":")[1]);
+                    	
+                    	TimePickerDialog tpDialog = new TimePickerDialog(MainActivity.this, mTimeSetListener, hour, minute, true);
+                    	tpDialog.show();
+                    	listview.invalidate();
                     }
                 });
                 view.findViewById(R.id.config_title_text).setOnClickListener(new OnClickListener() {
@@ -115,56 +152,6 @@ public final class MainActivity extends Activity {
 
     }
 
-    /**
-     * dummy comment.
-     * @author taka
-     * TODO: pickup for other file
-     *
-     */
-    class ListClickEvent implements AdapterView.OnItemClickListener {
-
-        /**
-         * onItemClickメソッドには、AdapterView(adapter)、選択した項目View(TextView)、選択された位置のint値、IDを示すlong値が渡される.
-         *
-         * @param argPosition dummy
-         * @param argView     dummy
-         * @param argId       dummy
-         * @param argAdapter  dummy
-         *
-         */
-        public void onItemClick(final AdapterView<?> argAdapter,
-                                final View argView,
-                                final int argPosition,
-                                final long argId) {
-            Log.i("Click", "clicked List Item");
-            final Intent intent = new Intent();
-            // start sum acticity
-            startActivity(intent);
-        }
-    }
-
-    /**
-     * dummy comment.
-     * @author taka
-     * TODO: pickup for other file
-     *
-     */
-    class ListSelectEvent implements AdapterView.OnItemSelectedListener {
-
-        @Override
-        public void onItemSelected(final AdapterView<?> arg0, final View arg1, final int arg2, final long arg3) {
-            // TODO Auto-generated method stub
-            Log.i("Click", "onItemSelected");
-        }
-
-        @Override
-        public void onNothingSelected(final AdapterView<?> arg0) {
-            // TODO Auto-generated method stub
-            Log.i("Click", "onNothingSelected");
-        }
-    }
-
-
 
     @Override
     /**
@@ -173,6 +160,8 @@ public final class MainActivity extends Activity {
      */
     public void onCreate(final Bundle savedState /* =savedInstanceState */) {
         super.onCreate(savedState);
+        Log.i("onCreate", "onCreate");
+
         setContentView(R.layout.activity_main);
         listview = (ListView) findViewById(R.id.ConfigList);
 
@@ -182,13 +171,19 @@ public final class MainActivity extends Activity {
         adapter = new ConfigAdapter();
         adapter.notifyDataSetChanged();
         listview.setAdapter(adapter);
-        listview.setOnItemClickListener(new ListClickEvent());
-        listview.setOnItemSelectedListener(new ListSelectEvent());
-        Log.i("onCreate", "onCreate");
-
-
+    }
+    
+    public void saveConfig(){
+    	Log.d("menu","called save");
+        final ConfigPreference pref = new ConfigPreference(PreferenceManager.getDefaultSharedPreferences(this));
+        for(int i = 0; i < dataList.size(); i++){
+        	dataList.get(i).setEnable(   ((ToggleButton)listview.getChildAt(i).findViewById(R.id.config_enable_toggle)).isChecked() );
+        }
+        pref.saveConfigItems(dataList);
+		(Toast.makeText(this, "Saved", Toast.LENGTH_LONG)).show();
     }
 
+    
     @Override
     /**
      * This is dummy comment.
@@ -198,6 +193,17 @@ public final class MainActivity extends Activity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.activity_main, menu);
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+        case R.id.menu_save:
+        	saveConfig();
+            return true;
+        default:
+            return super.onOptionsItemSelected(item);
+        }
     }
 
     /**

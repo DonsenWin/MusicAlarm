@@ -28,21 +28,31 @@ public class AlarmRegisterService extends Service {
 		Log.d("Service", "called onCreate");
 	}
 
-	private void registerAlarm(){
-        final ConfigPreference pref = new ConfigPreference(PreferenceManager.getDefaultSharedPreferences(this));
-        ArrayList<ConfigItem> dataList = (ArrayList<ConfigItem>) pref.loadConfigItems();     
-        (Toast.makeText(this,dataList.get(0).getTitle() , Toast.LENGTH_LONG)).show();
-        
-        Intent startIntent = new Intent(this, AlarmRingService.class); // ReceivedActivity���Ăяo���C���e���g���쐬
-        startIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        PendingIntent sender = PendingIntent.getService(this, 0, startIntent, 0); // �u���[�h�L���X�g�𓊂���PendingIntent�̍쐬
+	private void registerAlarm() {
+		final ConfigPreference pref = new ConfigPreference(
+				PreferenceManager.getDefaultSharedPreferences(this));
+		ArrayList<ConfigItem> dataList = (ArrayList<ConfigItem>) pref
+				.loadConfigItems();
+		StringBuilder set = new StringBuilder();
 
-        Calendar calendar = Calendar.getInstance(); // Calendar�擾
-        calendar.setTimeInMillis(System.currentTimeMillis()); // ���ݎ������擾
-        calendar.add(Calendar.SECOND, INTERVAL); // ���������INTERVAL�b���ݒ�
-
-        AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE); // AlramManager�擾
-        am.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), sender); // AlramManager��PendingIntent��o�^	
+		AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
+		for (ConfigItem item : dataList) {
+			if(item.isEnable()){
+			Intent startIntent = new Intent(this, AlarmRingService.class);
+			startIntent.setType(String.valueOf(dataList.indexOf(item)));
+			PendingIntent sender = PendingIntent.getService(this, 0,startIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+			Calendar calendar = item.getDateType().getNextDate(Calendar.getInstance(), item.getTime());
+			calendar.set(Calendar.SECOND,0);
+			am.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), sender);
+			set.append(item.getTime() + ",");
+			}
+		}
+		if(set.length() != 0){
+			(Toast.makeText(this, "register alarm set:" + set.toString(), Toast.LENGTH_LONG)).show();
+		}else{
+			(Toast.makeText(this, "No alarm set", Toast.LENGTH_LONG)).show();
+			
+		}
 	}
 	
 	@Override

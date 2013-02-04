@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.os.IBinder;
+import android.widget.Toast;
 
 public class AlarmRingService extends Service {
 
@@ -22,6 +23,8 @@ public class AlarmRingService extends Service {
     @Override
 	public final void onCreate() {
         super.onCreate();
+		(Toast.makeText(this, "AlarmRingService Start", Toast.LENGTH_LONG)).show();
+
         BluetoothA2DPWrapper.getInstance().connect(SPEAKER_MAC_AD);
         MusicWapper.getInstance().start((AudioManager) getSystemService(Context.AUDIO_SERVICE));
     }

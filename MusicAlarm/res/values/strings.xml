@@ -2,7 +2,7 @@
 <resources>
 
     <string name="app_name">MusicAlarm</string>
-    <string name="menu_settings">Settings</string>
+    <string name="save">save</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="start">MusicStart!</string>
     <string name="stop">Stop Music</string>

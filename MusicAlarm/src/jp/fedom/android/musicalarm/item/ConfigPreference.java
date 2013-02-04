@@ -22,7 +22,7 @@ public class ConfigPreference {
     private static final String PREFERENCE_KEY = "musicalarm_config";
 
     /** dummy comment. TODO:update comment */
-    private static final int ITEM_NUM = 1;
+    private static final int ITEM_NUM = 4;
 
     /** dummy comment. TODO:update comment */
     private static final int ZERO = 0;
