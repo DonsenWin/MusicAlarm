@@ -55,7 +55,6 @@ public class ConfigItem {
         public Calendar getNextDate(Calendar now,String config) {
             Calendar next = (Calendar)now.clone();
             
-            next.set(Calendar.HOUR, Integer.parseInt(config.split(":")[0]));
             next.set(Calendar.HOUR_OF_DAY, Integer.parseInt(config.split(":")[0]));
             next.set(Calendar.MINUTE, Integer.parseInt(config.split(":")[1]));
             
@@ -206,7 +205,7 @@ public class ConfigItem {
      * TODO: update comment
      */
     public ConfigItem() {
-        this(false, "Initial Title", "00:00", "/path/to/file/path",DateType.daily);
+        this(false, "Initial Title", "00:00", "/mnt/sdcard/media/audio/01.mp3", DateType.daily);
     }
 
     /**

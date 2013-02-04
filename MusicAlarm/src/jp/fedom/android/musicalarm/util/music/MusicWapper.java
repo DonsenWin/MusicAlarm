@@ -19,8 +19,6 @@ public enum MusicWapper {
     /** tag for log. */
     private static final String TAG = "MusicWapper";
 
-    /** for test. */
-    private static final String MUSIC_FILE_PATH = "/mnt/sdcard/media/audio/01.mp3";
 
     /** Music Player. */
     private MediaPlayer musicPlayer;
@@ -40,12 +38,12 @@ public enum MusicWapper {
      * getSystemService(Context.AUDIO_SERVICE).
      * @param manager please (AudioManager) getSystemService(Context.AUDIO_SERVICE)
      */
-    public void start(final AudioManager manager) {
+    public void start(final AudioManager manager,String path) {
         if (manager == null) {
             Log.w(TAG, "called start with null");
             return;
         }
-        if (manager != null || musicPlayer != null) {
+        if (musicPlayer != null) {
             stop();
         }
 
@@ -55,7 +53,7 @@ public enum MusicWapper {
 
         musicPlayer = new MediaPlayer();
         try {
-            musicPlayer.setDataSource(MUSIC_FILE_PATH);
+            musicPlayer.setDataSource(path);
             musicPlayer.setAudioStreamType(AudioManager.STREAM_VOICE_CALL);
             musicPlayer.prepare();
         } catch (IllegalArgumentException e) {

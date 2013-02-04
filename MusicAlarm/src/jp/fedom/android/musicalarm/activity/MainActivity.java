@@ -7,17 +7,13 @@ import jp.fedom.android.musicalarm.item.ConfigItem;
 import jp.fedom.android.musicalarm.item.ConfigPreference;
 import jp.fedom.android.musicalarm.service.AlarmRegisterService;
 import jp.fedom.android.musicalarm.service.AlarmRingService;
-import jp.fedom.android.musicalarm.util.bluetooth.BluetoothA2DPWrapper;
-import jp.fedom.android.musicalarm.util.music.MusicWapper;
 
-import android.media.AudioManager;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.ActivityManager.RunningServiceInfo;
 import android.app.TimePickerDialog;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
@@ -53,15 +49,13 @@ public final class MainActivity extends Activity {
     /** dummy comment. TODO:update comment */
     private ConfigAdapter adapter;
 
-    /** dummy comment. TODO:update comment */
-    private static final String SPEAKER_MAC_AD = "30:F9:ED:8F:35:B0";
-
     /** the callback received when the user "sets" the time in the dialog.*/
     private TimePickerListenerWrapper mTimeSetListener = new TimePickerListenerWrapper();
     
     private class TimePickerListenerWrapper implements TimePickerDialog.OnTimeSetListener{
 
-        private int itemPosition = -1;
+        private static final int INVALID = -1;
+        private int itemPosition = INVALID;
         
         public void setItemPosition(final int itemPosition_arg){
             this.itemPosition = itemPosition_arg;
@@ -69,15 +63,13 @@ public final class MainActivity extends Activity {
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                 Log.d("timepicker","onTimeset called");
-                if (itemPosition != -1){
+                if (itemPosition != INVALID){
                   dataList.get(itemPosition).setTime(String.format("%02d", hourOfDay) + ":" + String.format("%02d", minute));
-                    Log.d("timepicker","time set to " + itemPosition + "," + String.format("%02d", hourOfDay) + ":" + String.format("%02d", minute)) ;
-                  itemPosition = -1;
+                  Log.d("timepicker","time set to " + itemPosition + "," + String.format("%02d", hourOfDay) + ":" + String.format("%02d", minute)) ;
+                  itemPosition = INVALID;
                   adapter.notifyDataSetChanged();
                 }
-                
             }
-        
     }
    
     /**
@@ -207,8 +199,8 @@ public final class MainActivity extends Activity {
      * TODO:describe comment
      */
     public void onClickStartMusic(final View v) {
-        BluetoothA2DPWrapper.getInstance().connect(SPEAKER_MAC_AD);
-        MusicWapper.getInstance().start((AudioManager) getSystemService(Context.AUDIO_SERVICE));
+        Log.d("click","called onClickStartMusic");
+        startService( new Intent(MainActivity.this, AlarmRingService.class));
     }
 
     /**
@@ -217,30 +209,11 @@ public final class MainActivity extends Activity {
      * TODO:describe comment
      */
     public void onClickStopMusic(final View v) {
-        BluetoothA2DPWrapper.getInstance().disconnect(SPEAKER_MAC_AD);
-        MusicWapper.getInstance().stop();
+        Log.d("click","called onClickStopMusic");
+        stopService( new Intent(MainActivity.this, AlarmRingService.class));
     }
 
-    /**
-     * This is dummy comment.
-     * @param v
-     * TODO:describe comment
-     */
-   public void onClickStartAlarm(final View v) {
-        Log.d("onClick", "called onClickStartAlarm");
-   }
-
-    /**
-     * This is dummy comment.
-     * TODO:describe comment
-     * @param v view
-     */
-    public void onClickStopAlarm(final View v) {
-        Log.d("onClick", "called onClickStopAlarm");
-        Intent intent = new Intent(this, AlarmRingService.class);
-        startService(intent);
-    }
-    
+ 
     
     /**
      * This is dummy comment.
@@ -249,16 +222,7 @@ public final class MainActivity extends Activity {
      */
     public void onClickStartService(final View v){
         Log.d("click","called onClickStartService");
-        try{
-        ComponentName name = startService( new Intent(MainActivity.this, AlarmRegisterService.class));
-        if(name != null){
-            (Toast.makeText(this, name.getClassName(), Toast.LENGTH_SHORT)).show();
-        }else{
-            (Toast.makeText(this, "name is null", Toast.LENGTH_SHORT)).show();
-        }
-        }catch(Exception e){
-            Log.d("click",e.getMessage());
-        }
+        startService( new Intent(MainActivity.this, AlarmRegisterService.class));
     }
 
 
@@ -269,8 +233,7 @@ public final class MainActivity extends Activity {
      */
     public void onClickStopService(final View v){
         Log.d("click","called onClickStopService");
-        Intent intent = new Intent(MainActivity.this, AlarmRegisterService.class);
-        stopService(intent);
+        stopService(new Intent(MainActivity.this, AlarmRegisterService.class));
     }
     
     private boolean isAlarmServiceRunning() {
