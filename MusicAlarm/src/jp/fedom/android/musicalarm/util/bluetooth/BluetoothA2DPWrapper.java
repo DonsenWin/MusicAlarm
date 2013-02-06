@@ -10,18 +10,18 @@ import android.os.RemoteException;
 import android.util.Log;
 
 /**
- * This is dummy comment.
- * TODO: update comment
+ * This is dummy comment. TODO: update comment
+ * 
  * @author taka2
- *
+ * 
  */
 public enum BluetoothA2DPWrapper {
     /** Singleton implement. */
     instance;
 
     /**
-     * This is dummy comment.
-     * TODO: update comment
+     * This is dummy comment. TODO: update comment
+     * 
      * @return singleton instance
      */
     public static BluetoothA2DPWrapper getInstance() {
@@ -29,9 +29,10 @@ public enum BluetoothA2DPWrapper {
     }
 
     /**
-     * This is dummy comment.
-     * TODO: update comment
-     * @param macAddress MACADDRESS of device which you want to connect
+     * This is dummy comment. TODO: update comment
+     * 
+     * @param macAddress
+     *            MACADDRESS of device which you want to connect
      */
     public void connect(final String macAddress) {
         final IBluetoothA2dp ibta = getIBluetoothA2dp();
@@ -54,9 +55,10 @@ public enum BluetoothA2DPWrapper {
     }
 
     /**
-     * This is dummy comment.
-     * TODO: update comment
-     * @param macAddress MACADDRESS of device which you want to disconnect
+     * This is dummy comment. TODO: update comment
+     * 
+     * @param macAddress
+     *            MACADDRESS of device which you want to disconnect
      */
     public void disconnect(final String macAddress) {
         final IBluetoothA2dp ibta = getIBluetoothA2dp();
@@ -80,21 +82,19 @@ public enum BluetoothA2DPWrapper {
     }
 
     /**
-     * This is dummy comment.
-     * TODO: update comment
+     * This is dummy comment. TODO: update comment
+     * 
      * @return IBluetoothA2dp object. if can't create, return null
      */
     private IBluetoothA2dp getIBluetoothA2dp() {
         IBluetoothA2dp ibta = null;
         try {
-            final Method getServicemethod = Class.forName(
-                    "android.os.ServiceManager").getDeclaredMethod(
-                    "getService", String.class);
+            final Method getServicemethod = Class.forName("android.os.ServiceManager").getDeclaredMethod("getService",
+                    String.class);
 
-            final IBinder ibinder = (IBinder) getServicemethod.invoke(null,    "bluetooth_a2dp");
+            final IBinder ibinder = (IBinder) getServicemethod.invoke(null, "bluetooth_a2dp");
 
-            final Class<?> a2dpClass = Class.forName(
-                    "android.bluetooth.IBluetoothA2dp").getDeclaredClasses()[0];
+            final Class<?> a2dpClass = Class.forName("android.bluetooth.IBluetoothA2dp").getDeclaredClasses()[0];
 
             final Method interfaceMethod = a2dpClass.getDeclaredMethod("asInterface", IBinder.class);
             interfaceMethod.setAccessible(true);

@@ -10,8 +10,8 @@ import android.content.SharedPreferences.Editor;
 import android.util.Log;
 
 /**
- * dummy comment.
- * TODO:update comment
+ * dummy comment. TODO:update comment
+ * 
  * @author taka
  */
 public class ConfigPreference {
@@ -26,25 +26,26 @@ public class ConfigPreference {
 
     /** dummy comment. TODO:update comment */
     private static final int ZERO = 0;
-    
+
     /** dummy comment. TODO:update comment */
     private static final String TAG = "ConfigPreference";
 
     /**
-     * dummy comment.
-     * TODO:update comment
-     * @param argPreference preference
+     * dummy comment. TODO:update comment
+     * 
+     * @param argPreference
+     *            preference
      */
     public ConfigPreference(final SharedPreferences argPreference) {
         this.preference = argPreference;
     }
 
     /**
-     * dummy comment.
-     * TODO:update comment
+     * dummy comment. TODO:update comment
+     * 
      * @return list if under ITEM_NUM, padding inialized item.
      */
-	public final List<ConfigItem> loadConfigItems() {
+    public final List<ConfigItem> loadConfigItems() {
         ArrayList<ConfigItem> items;
         final String jsonData = preference.getString(PREFERENCE_KEY, "");
 
@@ -58,24 +59,24 @@ public class ConfigPreference {
             }
         }
         final int itemCountDelta = ITEM_NUM - items.size();
-        if(itemCountDelta > ZERO){
-			for (int i = 0; i < itemCountDelta; i++) {
-				items.add(new ConfigItem());
-			}
-		} else if (itemCountDelta < ZERO) {
-			for (int i = itemCountDelta; i < 0; i++) {
-				items.remove(ITEM_NUM + itemCountDelta);
-			}
-		}
+        if (itemCountDelta > ZERO) {
+            for (int i = 0; i < itemCountDelta; i++) {
+                items.add(new ConfigItem());
+            }
+        } else if (itemCountDelta < ZERO) {
+            for (int i = itemCountDelta; i < 0; i++) {
+                items.remove(ITEM_NUM + itemCountDelta);
+            }
+        }
         return items;
     }
 
-	/**
-	 * dummy comment. TODO:update comment
-	 * 
-	 * @param items
-	 *            items
-	 */
+    /**
+     * dummy comment. TODO:update comment
+     * 
+     * @param items
+     *            items
+     */
     public final void saveConfigItems(final List<ConfigItem> items) {
         if (items != null) {
             Editor editor = preference.edit();

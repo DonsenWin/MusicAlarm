@@ -12,12 +12,11 @@ import android.test.ActivityInstrumentationTestCase2;
 import android.util.Log;
 
 /**
- * This is dummy comment.
- * TODO: update comment
+ * This is dummy comment. TODO: update comment
+ * 
  * @author taka2
  */
-public class MainActivityTest extends
-  ActivityInstrumentationTestCase2<MainActivity> {
+public class MainActivityTest extends ActivityInstrumentationTestCase2<MainActivity> {
 
     /** Target Activity. */
     private Activity targetActivity;
@@ -25,13 +24,11 @@ public class MainActivityTest extends
     private Instrumentation instrumention;
 
     /**
-     * This is dummy comment.
-     * TODO: update comment
+     * This is dummy comment. TODO: update comment
      */
     public MainActivityTest() {
         super(MainActivity.class);
     }
-
 
     @Override
     /**
@@ -42,17 +39,17 @@ public class MainActivityTest extends
     protected final void setUp() throws Exception {
         super.setUp();
         targetActivity = getActivity();
-        instrumention  = getInstrumentation();
+        instrumention = getInstrumentation();
 
         Log.d("targetActivity", targetActivity.toString());
-        Log.d("instrumention",  instrumention.toString());
+        Log.d("instrumention", instrumention.toString());
     }
 
-
     /**
-     * This is dummy comment.
-     * TODO: update comment
-     * @throws Exception dummy comment.
+     * This is dummy comment. TODO: update comment
+     * 
+     * @throws Exception
+     *             dummy comment.
      */
     @Override
     protected final void tearDown() throws Exception {
@@ -60,8 +57,7 @@ public class MainActivityTest extends
     }
 
     /**
-     * This is dummy comment.
-     * TODO: update comment
+     * This is dummy comment. TODO: update comment
      */
     public final void test_sample() {
         ConfigPreference pref = new ConfigPreference(PreferenceManager.getDefaultSharedPreferences(targetActivity));

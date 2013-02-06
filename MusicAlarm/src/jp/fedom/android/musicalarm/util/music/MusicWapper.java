@@ -7,10 +7,10 @@ import android.media.MediaPlayer;
 import android.util.Log;
 
 /**
- * This is dummy comment.
- * TODO: update comment
+ * This is dummy comment. TODO: update comment
+ * 
  * @author taka2
- *
+ * 
  */
 public enum MusicWapper {
     /** Singleton implement. */
@@ -18,7 +18,6 @@ public enum MusicWapper {
 
     /** tag for log. */
     private static final String TAG = "MusicWapper";
-
 
     /** Music Player. */
     private MediaPlayer musicPlayer;
@@ -28,6 +27,7 @@ public enum MusicWapper {
 
     /**
      * for Singleton.
+     * 
      * @return singleInstance of this class
      */
     public static MusicWapper getInstance() {
@@ -36,9 +36,13 @@ public enum MusicWapper {
 
     /**
      * getSystemService(Context.AUDIO_SERVICE).
-     * @param manager please (AudioManager) getSystemService(Context.AUDIO_SERVICE)
+     * 
+     * @param manager
+     *            please (AudioManager) getSystemService(Context.AUDIO_SERVICE)
+     * @param path
+     *            path to audio file
      */
-    public void start(final AudioManager manager,String path) {
+    public void start(final AudioManager manager, final String path) {
         if (manager == null) {
             Log.w(TAG, "called start with null");
             return;
@@ -47,7 +51,7 @@ public enum MusicWapper {
             stop();
         }
 
-        this.audioManager =  manager;
+        this.audioManager = manager;
         this.audioManager.setBluetoothScoOn(true);
         this.audioManager.setMode(AudioManager.MODE_IN_CALL);
 
@@ -70,8 +74,7 @@ public enum MusicWapper {
     }
 
     /**
-     * This is dummy comment.
-     * TODO: update comment
+     * This is dummy comment. TODO: update comment
      */
     public void stop() {
         if (musicPlayer != null) {

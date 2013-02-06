@@ -31,8 +31,8 @@ import android.widget.Toast;
 import android.widget.ToggleButton;
 
 /**
- * This is dummy comment.
- * TODO: update comment
+ * This is dummy comment. TODO: update comment
+ * 
  * @author taka2
  */
 public final class MainActivity extends Activity {
@@ -49,32 +49,55 @@ public final class MainActivity extends Activity {
     /** dummy comment. TODO:update comment */
     private ConfigAdapter adapter;
 
-    /** the callback received when the user "sets" the time in the dialog.*/
+    /** the callback received when the user "sets" the time in the dialog. */
     private TimePickerListenerWrapper mTimeSetListener = new TimePickerListenerWrapper();
-    
-    private class TimePickerListenerWrapper implements TimePickerDialog.OnTimeSetListener{
 
-        private static final int INVALID = -1;
-        private int itemPosition = INVALID;
-        
-        public void setItemPosition(final int itemPosition_arg){
-            this.itemPosition = itemPosition_arg;
-        }
-            @Override
-            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                Log.d("timepicker","onTimeset called");
-                if (itemPosition != INVALID){
-                  dataList.get(itemPosition).setTime(String.format("%02d", hourOfDay) + ":" + String.format("%02d", minute));
-                  Log.d("timepicker","time set to " + itemPosition + "," + String.format("%02d", hourOfDay) + ":" + String.format("%02d", minute)) ;
-                  itemPosition = INVALID;
-                  adapter.notifyDataSetChanged();
-                }
-            }
-    }
-   
     /**
-     * dummy comment.
-     * TODO:update comment
+     * dummy comment. TODO:update comment
+     * 
+     * @author taka
+     */
+    private class TimePickerListenerWrapper implements TimePickerDialog.OnTimeSetListener {
+
+        /** dummy comment. TODO:update comment */
+        private static final int INVALID = -1;
+        /** dummy comment. TODO:update comment */
+        private int itemPosition = INVALID;
+
+        /**
+         * 
+         * dummy comment. TODO:update comment
+         * 
+         * @author taka
+         * @param itemPositionArg
+         *            itemPosition for onTimeSet
+         */
+        public void setItemPosition(final int itemPositionArg) {
+            this.itemPosition = itemPositionArg;
+        }
+
+        @Override
+        /**
+         * dummy comment. TODO:update comment
+         * 
+         * @author taka
+         */
+        public void onTimeSet(final TimePicker view, final int hourOfDay, final int minute) {
+            Log.d("timepicker", "onTimeset called");
+            if (itemPosition != INVALID) {
+                dataList.get(itemPosition).setTime(
+                        String.format("%02d", hourOfDay) + ":" + String.format("%02d", minute));
+                Log.d("timepicker", "time set to " + itemPosition + "," + String.format("%02d", hourOfDay) + ":"
+                        + String.format("%02d", minute));
+                itemPosition = INVALID;
+                adapter.notifyDataSetChanged();
+            }
+        }
+    }
+
+    /**
+     * dummy comment. TODO:update comment
+     * 
      * @author taka
      */
     private class ConfigAdapter extends BaseAdapter {
@@ -107,7 +130,7 @@ public final class MainActivity extends Activity {
                 ((TextView) view.findViewById(R.id.config_time_text)).setText(citem.getTime());
                 ((TextView) view.findViewById(R.id.config_music_text)).setText(citem.getPath());
                 ((ToggleButton) view.findViewById(R.id.config_enable_toggle)).setChecked(citem.isEnable());
-                
+
                 view.findViewById(R.id.config_music_text).setOnClickListener(new OnClickListener() {
                     @Override
                     public void onClick(final View view) {
@@ -119,11 +142,13 @@ public final class MainActivity extends Activity {
                     public void onClick(final View view) {
                         Log.i("Click", "config_time_text  index : " + dataList.indexOf(view));
                         mTimeSetListener.setItemPosition(listview.getPositionForView(view));
-                        
-                        int hour = Integer.valueOf(dataList.get(listview.getPositionForView(view)).getTime().split(":")[0]);
-                        int minute = Integer.valueOf(dataList.get(listview.getPositionForView(view)).getTime().split(":")[1]);
-                        
-                        TimePickerDialog tpDialog = new TimePickerDialog(MainActivity.this, mTimeSetListener, hour, minute, true);
+                        final String configTime = dataList.get(listview.getPositionForView(view)).getTime();
+
+                        int hour = Integer.valueOf(configTime.split(":")[0]);
+                        int minute = Integer.valueOf(configTime.split(":")[1]);
+
+                        TimePickerDialog tpDialog = new TimePickerDialog(MainActivity.this, mTimeSetListener, hour,
+                                minute, true);
                         tpDialog.show();
                         listview.invalidate();
                     }
@@ -147,7 +172,6 @@ public final class MainActivity extends Activity {
     public void onCreate(final Bundle savedState /* =savedInstanceState */) {
         super.onCreate(savedState);
         Log.i("onCreate", "onCreate");
-            
 
         setContentView(R.layout.activity_main);
         listview = (ListView) findViewById(R.id.ConfigList);
@@ -159,18 +183,21 @@ public final class MainActivity extends Activity {
         adapter.notifyDataSetChanged();
         listview.setAdapter(adapter);
     }
-    
-    public void saveConfig(){
-        Log.d("menu","called save");
+
+    /**
+     * This is dummy comment. TODO:describe comment
+     */
+    private void saveConfig() {
+        Log.d("menu", "called save");
         final ConfigPreference pref = new ConfigPreference(PreferenceManager.getDefaultSharedPreferences(this));
-        for(int i = 0; i < dataList.size(); i++){
-            dataList.get(i).setEnable(   ((ToggleButton)listview.getChildAt(i).findViewById(R.id.config_enable_toggle)).isChecked() );
+        for (int i = 0; i < dataList.size(); i++) {
+            dataList.get(i).setEnable(
+                    ((ToggleButton) listview.getChildAt(i).findViewById(R.id.config_enable_toggle)).isChecked());
         }
         pref.saveConfigItems(dataList);
         (Toast.makeText(this, "Saved", Toast.LENGTH_LONG)).show();
     }
 
-    
     @Override
     /**
      * This is dummy comment.
@@ -183,7 +210,11 @@ public final class MainActivity extends Activity {
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    /**
+     * This is dummy comment.
+     * TODO:describe comment
+     */
+    public boolean onOptionsItemSelected(final MenuItem item) {
         switch (item.getItemId()) {
         case R.id.menu_save:
             saveConfig();
@@ -195,47 +226,53 @@ public final class MainActivity extends Activity {
 
     /**
      * This is dummy comment.
+     * 
      * @param v
-     * TODO:describe comment
+     *            TODO:describe comment
      */
     public void onClickStartMusic(final View v) {
-        Log.d("click","called onClickStartMusic");
-        startService( new Intent(MainActivity.this, AlarmRingService.class));
+        Log.d("click", "called onClickStartMusic");
+        startService(new Intent(MainActivity.this, AlarmRingService.class));
     }
 
     /**
      * This is dummy comment.
+     * 
      * @param v
-     * TODO:describe comment
+     *            TODO:describe comment
      */
     public void onClickStopMusic(final View v) {
-        Log.d("click","called onClickStopMusic");
-        stopService( new Intent(MainActivity.this, AlarmRingService.class));
+        Log.d("click", "called onClickStopMusic");
+        stopService(new Intent(MainActivity.this, AlarmRingService.class));
     }
 
- 
-    
     /**
-     * This is dummy comment.
-     * TODO:describe comment
-     * @param v view
+     * This is dummy comment. TODO:describe comment
+     * 
+     * @param v
+     *            view
      */
-    public void onClickStartService(final View v){
-        Log.d("click","called onClickStartService");
-        startService( new Intent(MainActivity.this, AlarmRegisterService.class));
+    public void onClickStartService(final View v) {
+        Log.d("click", "called onClickStartService");
+        startService(new Intent(MainActivity.this, AlarmRegisterService.class));
     }
 
-
     /**
-     * This is dummy comment.
-     * TODO:describe comment
-     * @param v view
+     * This is dummy comment. TODO:describe comment
+     * 
+     * @param v
+     *            view
      */
-    public void onClickStopService(final View v){
-        Log.d("click","called onClickStopService");
+    public void onClickStopService(final View v) {
+        Log.d("click", "called onClickStopService");
         stopService(new Intent(MainActivity.this, AlarmRegisterService.class));
     }
-    
+
+    /**
+     * This is dummy comment. TODO:describe comment
+     * 
+     * @return if alarm servive is running, return true;
+     */
     private boolean isAlarmServiceRunning() {
         ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
         for (RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
@@ -247,12 +284,13 @@ public final class MainActivity extends Activity {
     }
 
     /**
-     * This is dummy comment.
-     * TODO:describe comment
-     * @param v view
+     * This is dummy comment. TODO:describe comment
+     * 
+     * @param v
+     *            view
      */
-    public void onClickCheckService(final View v){
-        Log.d("click","called onClickCheckService");
+    public void onClickCheckService(final View v) {
+        Log.d("click", "called onClickCheckService");
         String str = isAlarmServiceRunning() ? "service is running" : "service is NOT running";
         (Toast.makeText(this, str, Toast.LENGTH_SHORT)).show();
     }

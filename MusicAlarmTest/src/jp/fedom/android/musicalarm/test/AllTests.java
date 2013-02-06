@@ -6,8 +6,8 @@ import android.test.InstrumentationTestRunner;
 import android.test.suitebuilder.TestSuiteBuilder;
 
 /**
- * This is dummy comment.
- * TODO: update comment
+ * This is dummy comment. TODO: update comment
+ * 
  * @author taka2
  */
 public final class AllTests extends InstrumentationTestRunner {
@@ -19,9 +19,7 @@ public final class AllTests extends InstrumentationTestRunner {
      */
     public TestSuite getAllTests() {
         super.getAllTests();
-        return new TestSuiteBuilder(AllTests.class)
-                   .includeAllPackagesUnderHere()
-                   .build();
+        return new TestSuiteBuilder(AllTests.class).includeAllPackagesUnderHere().build();
     }
 
     @Override
@@ -34,4 +32,3 @@ public final class AllTests extends InstrumentationTestRunner {
     }
 
 }
-
