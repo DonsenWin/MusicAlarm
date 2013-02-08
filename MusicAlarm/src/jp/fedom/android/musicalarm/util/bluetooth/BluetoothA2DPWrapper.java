@@ -41,7 +41,7 @@ public enum BluetoothA2DPWrapper {
             bluetooth.cancelDiscovery();
             final BluetoothDevice device = (BluetoothDevice) bluetooth.getRemoteDevice(macAddress);
             try {
-                if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.HONEYCOMB) {
+                if (android.os.Build.VERSION.SDK_INT <= android.os.Build.VERSION_CODES.GINGERBREAD_MR1) {
                     ibta.connectSink(device);
                 } else {
                     Log.i("VERSION", "this is over SDK 11");
@@ -67,7 +67,7 @@ public enum BluetoothA2DPWrapper {
             bluetooth.cancelDiscovery();
             final BluetoothDevice device = (BluetoothDevice) bluetooth.getRemoteDevice(macAddress);
             try {
-                if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.HONEYCOMB) {
+                if (android.os.Build.VERSION.SDK_INT <= android.os.Build.VERSION_CODES.GINGERBREAD_MR1) {
                     ibta.disconnectSink(device);
                 } else {
                     Log.i("VERSION", "this is over SDK 11");
