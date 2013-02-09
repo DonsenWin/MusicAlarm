@@ -26,7 +26,8 @@ public final class SettingActivity extends PreferenceActivity {
         super.onCreate(savedState);
         addPreferencesFromResource(R.layout.activity_setting);
         final Intent intent = getIntent();
-        Log.d(TAG , intent.getStringExtra("configIndex"));
+        final int defaultInt = -1;
+        Log.d(TAG , "config index= " + intent.getIntExtra("configIndex", defaultInt));
     }
 
     /*
