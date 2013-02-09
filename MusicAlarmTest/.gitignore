@@ -18,3 +18,7 @@ local.properties
 # dump log
 *.log
 
+.project
+.classpath
+.checkstyle
+
