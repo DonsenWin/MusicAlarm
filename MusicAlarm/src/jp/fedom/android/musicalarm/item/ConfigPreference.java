@@ -79,7 +79,7 @@ public class ConfigPreference {
      */
     public final void saveConfigItems(final List<ConfigItem> items) {
         if (items != null) {
-            Editor editor = preference.edit();
+            final Editor editor = preference.edit();
             try {
                 editor.putString(PREFERENCE_KEY, ConfigItem.JsonGenerator.getInstance().genJson(items));
                 editor.apply();

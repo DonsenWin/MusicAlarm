@@ -8,12 +8,80 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONStringer;
 
+// TODO: Auto-generated Javadoc
 /**
  * dummy comment. TODO:update comment
  * 
  * @author taka
  */
 public class ConfigItem {
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public final int hashCode() {
+        final int prime = 31;
+        final int key1 = 1231;
+        final int key2 = 1237;
+        int result = 1;
+        result = prime * result + ((dateType == null) ? 0 : dateType.hashCode());
+        result = prime * result + (enable ? key1 : key2);
+        result = prime * result + ((path == null) ? 0 : path.hashCode());
+        result = prime * result + ((time == null) ? 0 : time.hashCode());
+        result = prime * result + ((title == null) ? 0 : title.hashCode());
+        return result;
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    @Override
+    public final boolean equals(final Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        ConfigItem other = (ConfigItem) obj;
+        if (dateType != other.dateType) {
+            return false;
+        }
+        if (enable != other.enable) {
+
+            return false;
+        }
+        if (path == null) {
+            if (other.path != null) {
+                return false;
+            }
+        } else if (!path.equals(other.path)) {
+            return false;
+        }
+        if (time == null) {
+            if (other.time != null) {
+                return false;
+            }
+        } else if (!time.equals(other.time)) {
+            return false;
+        }
+        if (title == null) {
+            if (other.title != null) {
+                return false;
+            }
+        } else if (!title.equals(other.title)) {
+            return false;
+        }
+        return true;
+    }
 
     /** dummy comment. TODO:update comment */
     private static final String KEY_ENABLE = "enable";
@@ -58,13 +126,14 @@ public class ConfigItem {
          * @return enum. if not exists, daily
          */
         public static DateType convert(final String typeStr) {
-            DateType[] candidates = DateType.values();
+            final DateType[] candidates = DateType.values();
+            DateType returnValue = DateType.daily;
             for (DateType type : candidates) {
                 if (typeStr.equals(type.name())) {
-                    return type;
+                    returnValue = type;
                 }
             }
-            return daily;
+            return returnValue;
         }
 
         /**
@@ -77,7 +146,7 @@ public class ConfigItem {
          * @return next time which must alart
          */
         public Calendar getNextDate(final Calendar now, final String config) {
-            Calendar next = (Calendar) now.clone();
+            final Calendar next = (Calendar) now.clone();
 
             next.set(Calendar.HOUR_OF_DAY, Integer.parseInt(config.split(":")[0]));
             next.set(Calendar.MINUTE, Integer.parseInt(config.split(":")[1]));

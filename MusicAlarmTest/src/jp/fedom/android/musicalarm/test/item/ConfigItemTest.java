@@ -15,15 +15,23 @@ import jp.fedom.android.musicalarm.item.ConfigItem;
 import jp.fedom.android.musicalarm.item.ConfigItem.DateType;
 import junit.framework.TestCase;
 
+// TODO: Auto-generated Javadoc
 /**
  * dummy comment. TODO:describe comment
  */
 public final class ConfigItemTest extends TestCase {
 
-    /** sample : Thu 2013-02-07 00:30:09 */
+    /** sample : Thu 2013-02-07 00:30:09. */
     private static final SimpleDateFormat SDF = new SimpleDateFormat("EEE yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
 
-    private static Calendar str2Calender(String value) {
+    /**
+     * Str2 calender.
+     * 
+     * @param value
+     *            the value
+     * @return the calendar
+     */
+    private static Calendar str2Calender(final String value) {
         Log.d("test", SDF.format(new Date()));
         try {
             Calendar cal = Calendar.getInstance();
@@ -35,6 +43,8 @@ public final class ConfigItemTest extends TestCase {
     }
 
     /**
+     * Instantiates a new config item test.
+     * 
      * @param name
      *            name
      */
@@ -178,21 +188,16 @@ public final class ConfigItemTest extends TestCase {
         sourceList.add(new ConfigItem(false, "sampletitle", "00:00", "/path/to/file", DateType.daily));
         sourceList.add(new ConfigItem(true, "sampletitle2", "01:00", "/path/to/file/2", DateType.weekDay));
         try {
-            String jsonString = ConfigItem.JsonGenerator.getInstance().genJson(sourceList);
+            final String jsonString = ConfigItem.JsonGenerator.getInstance().genJson(sourceList);
             ArrayList<ConfigItem> createdFromJsonList = (ArrayList<ConfigItem>) ConfigItem.JsonParser.getInstance()
                     .parse(jsonString);
 
-            assertEquals(false, createdFromJsonList.get(0).isEnable());
-            assertEquals("sampletitle", createdFromJsonList.get(0).getTitle());
-            assertEquals("00:00", createdFromJsonList.get(0).getTime());
-            assertEquals("/path/to/file", createdFromJsonList.get(0).getPath());
-            assertEquals(DateType.daily, createdFromJsonList.get(0).getDateType());
-
-            assertEquals(true, createdFromJsonList.get(1).isEnable());
-            assertEquals("sampletitle2", createdFromJsonList.get(1).getTitle());
-            assertEquals("01:00", createdFromJsonList.get(1).getTime());
-            assertEquals("/path/to/file/2", createdFromJsonList.get(1).getPath());
-            assertEquals(DateType.weekDay, createdFromJsonList.get(1).getDateType());
+            assertTrue(createdFromJsonList.get(0).equals(
+                    new ConfigItem(false, "sampletitle", "00:00", "/path/to/file",
+                    DateType.daily)));
+            assertTrue(createdFromJsonList.get(1).equals(
+                    new ConfigItem(true, "sampletitle2", "01:00", "/path/to/file/2",
+                    DateType.weekDay)));
         } catch (JSONException e) {
             e.printStackTrace();
             fail();

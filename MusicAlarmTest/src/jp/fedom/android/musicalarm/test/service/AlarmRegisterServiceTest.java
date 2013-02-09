@@ -1,22 +1,30 @@
 package jp.fedom.android.musicalarm.test.service;
 
 import jp.fedom.android.musicalarm.service.AlarmRegisterService;
-import android.content.ComponentName;
 import android.content.Intent;
 import android.test.ServiceTestCase;
 import android.test.mock.MockApplication;
 
+// TODO: Auto-generated Javadoc
 /**
  * This is dummy comment. TODO: update comment
  * 
  * @author taka2
  */
-public final class AlarmRegisterServiceTest extends ServiceTestCase {
+public final class AlarmRegisterServiceTest extends ServiceTestCase<AlarmRegisterService> {
 
-    public AlarmRegisterServiceTest(Class serviceClass) {
+    /**
+     * Instantiates a new alarm register service test.
+     *
+     * @param serviceClass the service class
+     */
+    public AlarmRegisterServiceTest(final Class<AlarmRegisterService> serviceClass) {
         super(serviceClass);
     }
 
+    /* (non-Javadoc)
+     * @see android.test.ServiceTestCase#setUp()
+     */
     @Override
     public void setUp() throws Exception {
         super.setUp();

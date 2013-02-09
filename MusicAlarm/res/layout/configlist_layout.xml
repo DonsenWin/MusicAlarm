@@ -9,7 +9,10 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true" />
+        android:layout_alignParentTop="true"
+        android:focusable="false"
+        android:focusableInTouchMode="false" 
+        />
 
     <TextView
         android:id="@+id/config_title_text"
@@ -19,6 +22,8 @@
         android:layout_alignParentTop="true"
         android:layout_toRightOf="@+id/config_enable_toggle"
         android:text="@string/config_title_default"
+        android:focusable="false"
+        android:focusableInTouchMode="false" 
         android:textSize="20sp" />
 
     <TextView
@@ -27,6 +32,8 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/config_title_text"
         android:layout_alignParentBottom="true"
+        android:focusable="false"
+        android:focusableInTouchMode="false" 
         android:text="@string/config_music_default" />
 
     <TextView
@@ -35,6 +42,8 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/config_music_text"
         android:layout_toRightOf="@+id/config_enable_toggle"
+        android:focusable="false"
+        android:focusableInTouchMode="false" 
         android:text="@string/config_devicename_default" />
 
     <TextView
@@ -46,6 +55,8 @@
         android:layout_below="@+id/config_time_title_text"
         android:layout_toRightOf="@+id/config_devicename_text"
         android:text="@string/config_time_default"
+        android:focusable="false"
+        android:focusableInTouchMode="false" 
         android:textSize="40sp" />
 
     <TextView
@@ -54,6 +65,8 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/config_time_text"
         android:layout_below="@+id/config_title_text"
+        android:focusable="false"
+        android:focusableInTouchMode="false" 
         android:text="@string/config_time_title" />
-    
+
 </RelativeLayout>

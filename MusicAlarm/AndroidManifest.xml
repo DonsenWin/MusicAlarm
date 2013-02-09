@@ -7,9 +7,9 @@
     <permission android:name="jp.fedom.android.musicalarm.LOCAL" />
 
     <uses-sdk
+        android:maxSdkVersion="10"
         android:minSdkVersion="10"
-        android:targetSdkVersion="10"
-        android:maxSdkVersion="10" />
+        android:targetSdkVersion="10" />
 
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
@@ -24,7 +24,8 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name="jp.fedom.android.musicalarm.activity.MainActivity"
-            android:label="@string/title_activity_main" >
+            android:label="@string/title_activity_main" 
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -33,19 +34,28 @@
 
         <service
             android:name="jp.fedom.android.musicalarm.service.AlarmRegisterService"
-            android:permission="jp.fedom.android.musicalarm.LOCAL" />
+            android:permission="jp.fedom.android.musicalarm.LOCAL" 
+            android:exported="false"/>
         <service
             android:name="jp.fedom.android.musicalarm.service.AlarmRingService"
-            android:permission="jp.fedom.android.musicalarm.LOCAL" />
-        
+            android:permission="jp.fedom.android.musicalarm.LOCAL" 
+            android:exported="false"/>
+
         <receiver
             android:name="jp.fedom.android.musicalarm.broadcastreceiver.BootLoaderBroadcastReceiver"
             android:enabled="true"
-            android:permission="jp.fedom.android.musicalarm.LOCAL" >
+            android:permission="jp.fedom.android.musicalarm.LOCAL" 
+            android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
+
+        <activity
+            android:name="jp.fedom.android.musicalarm.activity.SettingActivity"
+            android:label="@string/title_activity_setting"
+            android:exported="false" >
+        </activity>
     </application>
 
 </manifest>

@@ -35,16 +35,15 @@ public final class AlarmRingService extends Service {
     /**
      * 
      */
-    @SuppressWarnings("deprecation")
     private void setupNotification() {
         Log.d("notification", "called setupNotification");
-        Notification notification = new Notification(android.R.drawable.btn_default, "start music",
+        final Notification notification = new Notification(android.R.drawable.btn_default, "start music",
                 System.currentTimeMillis());
-        Intent i = new Intent(getApplicationContext(), MainActivity.class);
-        PendingIntent pend = PendingIntent.getActivity(this, 0, i, 0);
+        final Intent i = new Intent(getApplicationContext(), MainActivity.class);
+        final PendingIntent pend = PendingIntent.getActivity(this, 0, i, 0);
         // builder required above api 11
         notification.setLatestEventInfo(getApplicationContext(), "タイトル", "テキスト", pend);
-        NotificationManager mManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        final NotificationManager mManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         mManager.notify(android.R.string.ok, notification);
     }
 

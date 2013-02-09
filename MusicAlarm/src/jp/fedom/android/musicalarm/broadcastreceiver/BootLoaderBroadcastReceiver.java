@@ -16,7 +16,7 @@ public final class BootLoaderBroadcastReceiver extends BroadcastReceiver {
      * TODO:describe comment
      */
     public void onReceive(final Context context, final Intent arg1) {
-        Intent intent = new Intent(context, AlarmRegisterService.class);
+        final Intent intent = new Intent(context, AlarmRegisterService.class);
         context.startService(intent);
     }
 }
