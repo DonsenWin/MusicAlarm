@@ -1,6 +1,56 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+    <PreferenceCategory android:title="@string/preferences_category_basic_title" >
 
+        <CheckBoxPreference
+            android:key="preference_item_enable_key"
+            android:summary="@string/preference_item_enable_summary"
+            android:title="@string/preference_item_enable_title" />
+        <EditTextPreference
+            android:dialogTitle="@string/preference_item_title_dialogtitle"
+            android:key="preference_item_title_key"
+            android:summary="@string/preference_item_title_summary"
+            android:title="@string/preference_item_title_title" />
+        
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/preferences_category_time_title" >
+
+        <EditTextPreference
+            android:dialogTitle="@string/preference_item_title_dialogtitle"
+            android:key="preference_item_title_key"
+            android:summary="@string/preference_item_title_summary"
+            android:title="@string/preference_item_title_title" />
+        
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/preferences_category_help_title" >
+          <PreferenceScreen
+            android:summary="@string/preference_item_mypage_summary"
+            android:title="@string/preference_item_mypage_title" >
+
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="http://fedom.jp/wordpress/" />
+        </PreferenceScreen>
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/preference_attributes" >
+
+        <CheckBoxPreference
+            android:key="parent_checkbox_preference"
+            android:summary="@string/summary_parent_preference"
+            android:title="@string/title_parent_preference" />
+        <!-- The visual style of a child is defined by this styled theme attribute. -->
+
+        <CheckBoxPreference
+            android:dependency="parent_checkbox_preference"
+            android:key="child_checkbox_preference"
+            android:layout="?android:attr/preferenceLayoutChild"
+            android:summary="@string/summary_child_preference"
+            android:title="@string/title_child_preference" />
+    </PreferenceCategory>
+    
     <PreferenceCategory android:title="@string/inline_preferences" >
 
         <CheckBoxPreference

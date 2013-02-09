@@ -40,5 +40,15 @@
     <string name="title_parent_preference">title_parent_preference</string>
     <string name="summary_child_preference">summary_child_preference</string>
     <string name="title_child_preference">title_child_preference</string>
+    <string name="preferences_category_basic_title">基本設定</string>
+    <string name="preference_item_enable_summary">この設定の有効/無効を設定します。</string>
+    <string name="preference_item_enable_title">有効/無効</string>
+    <string name="preference_item_title_dialogtitle">タイトル設定</string>
+    <string name="preference_item_title_summary">表示されるタイトルを設定します。</string>
+    <string name="preference_item_title_title">タイトル設定</string>
+    <string name="preferences_category_time_title">時間設定</string>
+    <string name="preferences_category_help_title">ヘルプ</string>
+    <string name="preference_item_mypage_summary">このアプリケーションの作者のブログへアクセスします。</string>
+    <string name="preference_item_mypage_title">作者ページ</string>
 
 </resources>
