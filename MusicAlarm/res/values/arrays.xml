@@ -1,5 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <array name="entries_list_preference">&lt;item&gt;1&lt;/item&gt;</array>
-    <array name="entryvalues_list_preference">&lt;item&gt;1&lt;/item&gt;</array></resources>
+    
+    <string-array name="preference_list_datetype_entries">
+        <item>毎日</item>
+        <item>平日</item>
+        <item>休日</item>
+        <item>一度だけ</item>
+        </string-array>
+    <string-array name="preference_list_datetype_values">
+        <item>daily</item>
+        <item>weekday</item>
+        <item>dayoff</item>
+        <item>oncetime</item>
+        </string-array>
+    
+    
+    <string-array name="entries_list_preference">
+        <item>First</item>
+        <item>second</item>
+        <item>Third</item>
+    </string-array>
+    <string-array name="entryvalues_list_preference">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+
+</resources>
