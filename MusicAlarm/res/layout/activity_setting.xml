@@ -17,20 +17,39 @@
     <PreferenceCategory android:title="@string/preferences_category_time_title" >
 
         <ListPreference
-            android:dialogTitle="@string/dialog_title_list_preference"
+            android:dialogTitle="@string/dialog_title_datetype_preference"
             android:entries="@array/preference_list_datetype_entries"
             android:entryValues="@array/preference_list_datetype_values"
             android:key="@string/preference_list_datetype_key"
             android:summary="@string/preference_list_datetype_summary"
             android:title="@string/preference_list_datetype_title" />
-        <EditTextPreference
-            android:dialogTitle="@string/preference_item_title_dialogtitle"
-            android:key="@string/preference_item_title_key"
-            android:summary="@string/preference_item_title_summary"
-            android:title="@string/preference_item_title_title" />
+        <jp.fedom.android.musicalarm.ui.TimePickerPreference
+            android:key="@string/preference_time_key"
+            android:title="@string/preference_time_title" />
+             
         
     </PreferenceCategory>
+    <PreferenceCategory android:title="@string/preferences_category_music_title" >
 
+        <ListPreference
+            android:dialogTitle="@string/preference_list_musicfile_title"
+            android:entries="@array/empty_array"
+            android:entryValues="@array/empty_array"
+            android:key="@string/preference_list_musicfile_key"
+            android:summary="@string/preference_list_musicfile_summary"
+            android:title="@string/preference_list_musicfile_title" />
+        <jp.fedom.android.musicalarm.ui.MusicScannerPreference
+            android:key="@string/preference_musicscanner_key"
+            android:title="@string/preference_musicscanner_title" />
+        <ListPreference
+            android:dialogTitle="@string/preference_list_musicdevice_title"
+            android:entries="@array/empty_array"
+            android:entryValues="@array/empty_array"
+            android:key="@string/preference_list_musicdevice_key"
+            android:summary="@string/preference_list_musicdevice_summary"
+            android:title="@string/preference_list_musicdevice_title" />
+        </PreferenceCategory>
+        
     <PreferenceCategory android:title="@string/preferences_category_help_title" >
           <PreferenceScreen
             android:summary="@string/preference_item_mypage_summary"

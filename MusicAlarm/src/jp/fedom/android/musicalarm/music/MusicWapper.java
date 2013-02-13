@@ -1,4 +1,4 @@
-package jp.fedom.android.musicalarm.util.music;
+package jp.fedom.android.musicalarm.music;
 
 import java.io.File;
 import java.io.IOException;

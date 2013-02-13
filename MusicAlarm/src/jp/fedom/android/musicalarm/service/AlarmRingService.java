@@ -1,8 +1,8 @@
 package jp.fedom.android.musicalarm.service;
 
 import jp.fedom.android.musicalarm.activity.MainActivity;
-import jp.fedom.android.musicalarm.util.bluetooth.BluetoothA2DPWrapper;
-import jp.fedom.android.musicalarm.util.music.MusicWapper;
+import jp.fedom.android.musicalarm.bluetooth.BluetoothA2DPWrapper;
+import jp.fedom.android.musicalarm.music.MusicWapper;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;

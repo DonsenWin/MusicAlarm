@@ -1,4 +1,4 @@
-package jp.fedom.android.musicalarm.util.bluetooth;
+package jp.fedom.android.musicalarm.bluetooth;
 
 import java.lang.reflect.Method;
 

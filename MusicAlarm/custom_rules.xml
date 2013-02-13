@@ -1,4 +1,4 @@
-<project name="custom" default="findbugs">
+<project name="custom" default="monkey">
   <property environment="env" />
   <property name="project.home"     value="${env.PROJECT_HOME}"/>
   <property name="mainproject.home" value="${env.MAIN_PROJECT_HOME}"/>
@@ -6,7 +6,8 @@
   <property name="javadoc.package"  value="${env.JAVADOC_PACKAGE}"/>
   <property name="findbugs.home"    value="${env.FINDBUGS_HOME}" />
   <property name="pmd.home"         value="${env.PMD_HOME}" />
-  <property name="lint.script"      value="${sdk.dir}/tools/lint"/>
+  <property name="lint.script"      value="${sdk.dir}/tools/lint.bat"/>
+  <property name="adb.script"      value="${env.sdk.dir}/platform-tools/adb.exe"/>
   
   <!-- switch lint command for linux and windows -->
   <condition property="bash.it" value="/bin/bash" else="cmd">
@@ -127,4 +128,20 @@
     </cpd>
   </target>
 
+  <target name="monkey">
+      <echo message="${adb.script}"/>
+      <echo message="${javadoc.package}"/>
+      <exec executable="${adb.script}">
+      <arg value="shell"/>
+      <arg value="monkey"/>
+      <arg value="--kill-process-after-error"/>
+      <arg value="--monitor-native-crashes"/>
+      <arg value="-p"/>
+      <arg value="${javadoc.package}"/>
+      <arg value="-v"/>
+      <arg value="10000000"/>
+     </exec>
+      
+  </target>
+  
 </project>
